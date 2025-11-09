@@ -1,0 +1,4202 @@
+{
+	"openapi": "3.0.0",
+	"components": {
+		"examples": {},
+		"headers": {},
+		"parameters": {},
+		"requestBodies": {},
+		"responses": {},
+		"schemas": {
+			"ChatMessageCountResponseDto": {
+				"properties": {
+					"count": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"count"
+				],
+				"type": "object"
+			},
+			"Id": {
+				"type": "integer",
+				"format": "int32",
+				"description": "A valid DB entity ID.",
+				"minimum": 1
+			},
+			"PostAuthorResponseDto": {
+				"properties": {
+					"avatarUrl": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					},
+					"id": {
+						"$ref": "#/components/schemas/Id"
+					}
+				},
+				"required": [
+					"name",
+					"id"
+				],
+				"type": "object"
+			},
+			"DiscussionResponseDto": {
+				"properties": {
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"author": {
+						"$ref": "#/components/schemas/PostAuthorResponseDto"
+					},
+					"description": {
+						"type": "string"
+					},
+					"title": {
+						"type": "string"
+					},
+					"courseId": {
+						"$ref": "#/components/schemas/Id"
+					},
+					"id": {
+						"$ref": "#/components/schemas/Id"
+					}
+				},
+				"required": [
+					"updatedAt",
+					"createdAt",
+					"author",
+					"description",
+					"title",
+					"courseId",
+					"id"
+				],
+				"type": "object"
+			},
+			"DiscussionPostResponseDto": {
+				"properties": {
+					"replies": {
+						"items": {
+							"$ref": "#/components/schemas/DiscussionPostResponseDto"
+						},
+						"type": "array"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"author": {
+						"$ref": "#/components/schemas/PostAuthorResponseDto"
+					},
+					"isDeleted": {
+						"type": "boolean",
+						"description": "Whether or not this post should be displayed as deleted"
+					},
+					"content": {
+						"type": "string"
+					},
+					"id": {
+						"$ref": "#/components/schemas/Id"
+					}
+				},
+				"required": [
+					"replies",
+					"updatedAt",
+					"createdAt",
+					"author",
+					"isDeleted",
+					"content",
+					"id"
+				],
+				"type": "object"
+			},
+			"DiscussionPostsResponseDto": {
+				"properties": {
+					"posts": {
+						"items": {
+							"$ref": "#/components/schemas/DiscussionPostResponseDto"
+						},
+						"type": "array"
+					},
+					"discussionId": {
+						"$ref": "#/components/schemas/Id"
+					}
+				},
+				"required": [
+					"posts",
+					"discussionId"
+				],
+				"type": "object"
+			},
+			"CreateDiscussionRequestDto": {
+				"properties": {
+					"description": {
+						"type": "string",
+						"minLength": 1
+					},
+					"title": {
+						"type": "string",
+						"minLength": 1
+					},
+					"courseId": {
+						"$ref": "#/components/schemas/Id"
+					}
+				},
+				"required": [
+					"description",
+					"title",
+					"courseId"
+				],
+				"type": "object"
+			},
+			"CreateDiscussionCommentResponseDto": {
+				"properties": {
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"parentId": {
+						"allOf": [
+							{
+								"$ref": "#/components/schemas/Id"
+							}
+						],
+						"nullable": true
+					},
+					"discussionId": {
+						"$ref": "#/components/schemas/Id"
+					},
+					"author": {
+						"$ref": "#/components/schemas/PostAuthorResponseDto"
+					},
+					"isDeleted": {
+						"type": "boolean"
+					},
+					"content": {
+						"type": "string"
+					},
+					"id": {
+						"$ref": "#/components/schemas/Id"
+					}
+				},
+				"required": [
+					"updatedAt",
+					"createdAt",
+					"parentId",
+					"discussionId",
+					"author",
+					"isDeleted",
+					"content",
+					"id"
+				],
+				"type": "object"
+			},
+			"CreateDiscussionCommentRequestDto": {
+				"properties": {
+					"parentId": {
+						"allOf": [
+							{
+								"$ref": "#/components/schemas/Id"
+							}
+						],
+						"nullable": true
+					},
+					"content": {
+						"type": "string",
+						"minLength": 1
+					}
+				},
+				"required": [
+					"parentId",
+					"content"
+				],
+				"type": "object"
+			},
+			"ConversationResponseDto": {
+				"properties": {
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"courseId": {
+						"type": "number",
+						"format": "double"
+					},
+					"userId": {
+						"type": "number",
+						"format": "double"
+					},
+					"title": {
+						"type": "string"
+					},
+					"id": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"updatedAt",
+					"createdAt",
+					"courseId",
+					"userId",
+					"title",
+					"id"
+				],
+				"type": "object"
+			},
+			"ConversationListResponseDto": {
+				"properties": {
+					"conversations": {
+						"items": {
+							"$ref": "#/components/schemas/ConversationResponseDto"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"conversations"
+				],
+				"type": "object"
+			},
+			"CreateConversationRequestDto": {
+				"properties": {
+					"courseId": {
+						"type": "number",
+						"format": "double",
+						"description": "Course ID for the conversation context"
+					},
+					"title": {
+						"type": "string",
+						"minLength": 1
+					}
+				},
+				"required": [
+					"courseId",
+					"title"
+				],
+				"type": "object"
+			},
+			"Email": {
+				"type": "string",
+				"pattern": "^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$"
+			},
+			"CourseMemberResponseDto": {
+				"properties": {
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"role": {
+						"properties": {
+							"name": {
+								"type": "string"
+							},
+							"id": {
+								"$ref": "#/components/schemas/Id"
+							}
+						},
+						"required": [
+							"name",
+							"id"
+						],
+						"type": "object"
+					},
+					"user": {
+						"properties": {
+							"email": {
+								"$ref": "#/components/schemas/Email"
+							},
+							"preferredName": {
+								"type": "string"
+							},
+							"fullName": {
+								"type": "string"
+							},
+							"id": {
+								"$ref": "#/components/schemas/Id"
+							}
+						},
+						"required": [
+							"email",
+							"preferredName",
+							"fullName",
+							"id"
+						],
+						"type": "object"
+					},
+					"userId": {
+						"$ref": "#/components/schemas/Id"
+					},
+					"id": {
+						"$ref": "#/components/schemas/Id"
+					}
+				},
+				"required": [
+					"createdAt",
+					"role",
+					"user",
+					"userId",
+					"id"
+				],
+				"type": "object"
+			},
+			"AddCourseMemberListItemRequestDto": {
+				"properties": {
+					"roleId": {
+						"$ref": "#/components/schemas/Id"
+					},
+					"email": {
+						"$ref": "#/components/schemas/Email"
+					}
+				},
+				"required": [
+					"roleId",
+					"email"
+				],
+				"type": "object"
+			},
+			"AddCourseMemberRequestDto": {
+				"properties": {
+					"members": {
+						"items": {
+							"$ref": "#/components/schemas/AddCourseMemberListItemRequestDto"
+						},
+						"type": "array",
+						"minItems": 1
+					}
+				},
+				"required": [
+					"members"
+				],
+				"type": "object"
+			},
+			"ModuleResponseDto": {
+				"properties": {
+					"content": {
+						"type": "string"
+					},
+					"title": {
+						"type": "string"
+					},
+					"id": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"content",
+					"title",
+					"id"
+				],
+				"type": "object"
+			},
+			"CourseChaptersResponseDto": {
+				"properties": {
+					"modules": {
+						"items": {
+							"$ref": "#/components/schemas/ModuleResponseDto"
+						},
+						"type": "array"
+					},
+					"title": {
+						"type": "string"
+					},
+					"id": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"modules",
+					"title",
+					"id"
+				],
+				"type": "object"
+			},
+			"CreateChapterRequestDto": {
+				"properties": {
+					"order": {
+						"type": "number",
+						"format": "double",
+						"description": "Order of the chapter in the course.",
+						"minimum": 1
+					},
+					"title": {
+						"type": "string",
+						"description": "Name of the chapter.",
+						"minLength": 1
+					}
+				},
+				"required": [
+					"title"
+				],
+				"type": "object"
+			},
+			"Name": {
+				"type": "string",
+				"description": "A valid name, done as an example.",
+				"pattern": "^([A-Z][a-z]*\\s?)+$"
+			},
+			"CourseListItemResponseDto": {
+				"properties": {
+					"role": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					},
+					"id": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"role",
+					"name",
+					"id"
+				],
+				"type": "object"
+			},
+			"CreateCourseResponseDto": {
+				"properties": {
+					"name": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"name"
+				],
+				"type": "object"
+			},
+			"MostAccessedMaterialsResponseDto": {
+				"properties": {
+					"materials": {
+						"items": {
+							"properties": {
+								"accessCount": {
+									"type": "number",
+									"format": "double"
+								},
+								"title": {
+									"type": "string"
+								},
+								"contentId": {
+									"$ref": "#/components/schemas/Id"
+								}
+							},
+							"required": [
+								"accessCount",
+								"title",
+								"contentId"
+							],
+							"type": "object"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"materials"
+				],
+				"type": "object"
+			},
+			"AverageTimeSpentResponseDto": {
+				"properties": {
+					"byContentType": {
+						"items": {
+							"properties": {
+								"averageSeconds": {
+									"type": "number",
+									"format": "double"
+								},
+								"contentType": {
+									"type": "string"
+								}
+							},
+							"required": [
+								"averageSeconds",
+								"contentType"
+							],
+							"type": "object"
+						},
+						"type": "array"
+					},
+					"averageSeconds": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"byContentType",
+					"averageSeconds"
+				],
+				"type": "object"
+			},
+			"ContentEngagementOverTimeResponseDto": {
+				"properties": {
+					"data": {
+						"items": {
+							"properties": {
+								"views": {
+									"type": "number",
+									"format": "double"
+								},
+								"date": {
+									"type": "string"
+								}
+							},
+							"required": [
+								"views",
+								"date"
+							],
+							"type": "object"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"data"
+				],
+				"type": "object"
+			},
+			"RecordContentActivityResponseDto": {
+				"properties": {
+					"success": {
+						"type": "boolean"
+					}
+				},
+				"required": [
+					"success"
+				],
+				"type": "object"
+			},
+			"ContentActivityType.MODULE_VIEW": {
+				"enum": [
+					"module_view"
+				],
+				"type": "string"
+			},
+			"ContentActivityType.MODULE_COMPLETION": {
+				"enum": [
+					"module_completion"
+				],
+				"type": "string"
+			},
+			"ContentActivityType.DISCUSSION_VIEW": {
+				"enum": [
+					"discussion_view"
+				],
+				"type": "string"
+			},
+			"ContentActivityType.DISCUSSION_POST": {
+				"enum": [
+					"discussion_post"
+				],
+				"type": "string"
+			},
+			"ContentActivityType.MATERIAL_DOWNLOAD": {
+				"enum": [
+					"material_download"
+				],
+				"type": "string"
+			},
+			"RecordContentActivityRequestDto": {
+				"allOf": [
+					{
+						"anyOf": [
+							{
+								"properties": {
+									"additionalInfo": {
+										"properties": {
+											"chapterId": {
+												"type": "string"
+											},
+											"moduleTitle": {
+												"type": "string"
+											}
+										},
+										"required": [
+											"chapterId",
+											"moduleTitle"
+										],
+										"type": "object"
+									},
+									"type": {
+										"$ref": "#/components/schemas/ContentActivityType.MODULE_VIEW"
+									}
+								},
+								"required": [
+									"additionalInfo",
+									"type"
+								],
+								"type": "object"
+							},
+							{
+								"properties": {
+									"additionalInfo": {
+										"properties": {
+											"chapterId": {
+												"type": "string"
+											},
+											"moduleTitle": {
+												"type": "string"
+											}
+										},
+										"required": [
+											"chapterId",
+											"moduleTitle"
+										],
+										"type": "object"
+									},
+									"type": {
+										"$ref": "#/components/schemas/ContentActivityType.MODULE_COMPLETION"
+									}
+								},
+								"required": [
+									"additionalInfo",
+									"type"
+								],
+								"type": "object"
+							},
+							{
+								"properties": {
+									"additionalInfo": {
+										"properties": {
+											"categoryId": {
+												"type": "string"
+											},
+											"discussionTitle": {
+												"type": "string"
+											}
+										},
+										"required": [
+											"categoryId",
+											"discussionTitle"
+										],
+										"type": "object"
+									},
+									"type": {
+										"$ref": "#/components/schemas/ContentActivityType.DISCUSSION_VIEW"
+									}
+								},
+								"required": [
+									"additionalInfo",
+									"type"
+								],
+								"type": "object"
+							},
+							{
+								"properties": {
+									"additionalInfo": {
+										"properties": {
+											"postId": {
+												"type": "string"
+											},
+											"categoryId": {
+												"type": "string"
+											},
+											"discussionTitle": {
+												"type": "string"
+											}
+										},
+										"required": [
+											"postId",
+											"categoryId",
+											"discussionTitle"
+										],
+										"type": "object"
+									},
+									"type": {
+										"$ref": "#/components/schemas/ContentActivityType.DISCUSSION_POST"
+									}
+								},
+								"required": [
+									"additionalInfo",
+									"type"
+								],
+								"type": "object"
+							},
+							{
+								"properties": {
+									"additionalInfo": {
+										"properties": {
+											"fileType": {
+												"type": "string"
+											},
+											"fileName": {
+												"type": "string"
+											}
+										},
+										"required": [
+											"fileType",
+											"fileName"
+										],
+										"type": "object"
+									},
+									"type": {
+										"$ref": "#/components/schemas/ContentActivityType.MATERIAL_DOWNLOAD"
+									}
+								},
+								"required": [
+									"additionalInfo",
+									"type"
+								],
+								"type": "object"
+							}
+						]
+					},
+					{
+						"properties": {
+							"durationSeconds": {
+								"type": "number",
+								"format": "double"
+							},
+							"contentId": {
+								"$ref": "#/components/schemas/Id"
+							},
+							"courseId": {
+								"$ref": "#/components/schemas/Id"
+							}
+						},
+						"required": [
+							"courseId"
+						],
+						"type": "object"
+					}
+				]
+			},
+			"ReorderModulesResponseDto": {
+				"properties": {
+					"modules": {
+						"items": {
+							"$ref": "#/components/schemas/ModuleResponseDto"
+						},
+						"type": "array"
+					},
+					"chapterId": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"modules",
+					"chapterId"
+				],
+				"type": "object"
+			},
+			"CreateModuleRequestDto": {
+				"properties": {
+					"content": {
+						"type": "string",
+						"minLength": 1
+					},
+					"title": {
+						"type": "string",
+						"minLength": 1
+					}
+				},
+				"required": [
+					"content",
+					"title"
+				],
+				"type": "object"
+			},
+			"ActiveUsersResponseDto": {
+				"properties": {
+					"count": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"count"
+				],
+				"type": "object"
+			},
+			"ActiveUsersOverTimeResponseDto": {
+				"properties": {
+					"data": {
+						"items": {
+							"properties": {
+								"activeUsers": {
+									"type": "number",
+									"format": "double"
+								},
+								"date": {
+									"type": "string"
+								}
+							},
+							"required": [
+								"activeUsers",
+								"date"
+							],
+							"type": "object"
+						},
+						"type": "array"
+					},
+					"total": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"data",
+					"total"
+				],
+				"type": "object"
+			},
+			"ClickAnalyticsResponseDto": {
+				"properties": {
+					"topClicks": {
+						"items": {
+							"properties": {
+								"clicks": {
+									"type": "number",
+									"format": "double"
+								},
+								"element": {
+									"type": "string"
+								}
+							},
+							"required": [
+								"clicks",
+								"element"
+							],
+							"type": "object"
+						},
+						"type": "array"
+					},
+					"uniqueElements": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"topClicks",
+					"uniqueElements"
+				],
+				"type": "object"
+			},
+			"PageViewsStatsResponseDto": {
+				"properties": {
+					"topPages": {
+						"items": {
+							"properties": {
+								"count": {
+									"type": "number",
+									"format": "double"
+								},
+								"url": {
+									"type": "string"
+								}
+							},
+							"required": [
+								"count",
+								"url"
+							],
+							"type": "object"
+						},
+						"type": "array"
+					},
+					"uniquePages": {
+						"type": "number",
+						"format": "double"
+					},
+					"totalViews": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"topPages",
+					"uniquePages",
+					"totalViews"
+				],
+				"type": "object"
+			},
+			"RecordUserActivityResponseDto": {
+				"properties": {
+					"success": {
+						"type": "boolean"
+					}
+				},
+				"required": [
+					"success"
+				],
+				"type": "object"
+			},
+			"UserActivityType.PAGE_VIEW": {
+				"enum": [
+					"page_view"
+				],
+				"type": "string"
+			},
+			"UserActivityType.BUTTON_CLICK": {
+				"enum": [
+					"button_click"
+				],
+				"type": "string"
+			},
+			"UserActivityType.LINK_CLICK": {
+				"enum": [
+					"link_click"
+				],
+				"type": "string"
+			},
+			"RecordUserActivityRequestDto": {
+				"allOf": [
+					{
+						"anyOf": [
+							{
+								"properties": {
+									"additionalInfo": {
+										"properties": {
+											"duration": {
+												"type": "number",
+												"format": "double"
+											},
+											"referrer": {
+												"type": "string"
+											},
+											"url": {
+												"type": "string"
+											}
+										},
+										"required": [
+											"url"
+										],
+										"type": "object"
+									},
+									"type": {
+										"$ref": "#/components/schemas/UserActivityType.PAGE_VIEW"
+									}
+								},
+								"required": [
+									"additionalInfo",
+									"type"
+								],
+								"type": "object"
+							},
+							{
+								"properties": {
+									"additionalInfo": {
+										"properties": {
+											"url": {
+												"type": "string"
+											},
+											"text": {
+												"type": "string"
+											},
+											"elementId": {
+												"type": "string"
+											}
+										},
+										"type": "object"
+									},
+									"type": {
+										"$ref": "#/components/schemas/UserActivityType.BUTTON_CLICK"
+									}
+								},
+								"required": [
+									"additionalInfo",
+									"type"
+								],
+								"type": "object"
+							},
+							{
+								"properties": {
+									"additionalInfo": {
+										"properties": {
+											"url": {
+												"type": "string"
+											},
+											"text": {
+												"type": "string"
+											},
+											"elementId": {
+												"type": "string"
+											}
+										},
+										"type": "object"
+									},
+									"type": {
+										"$ref": "#/components/schemas/UserActivityType.LINK_CLICK"
+									}
+								},
+								"required": [
+									"additionalInfo",
+									"type"
+								],
+								"type": "object"
+							}
+						]
+					},
+					{
+						"properties": {
+							"courseId": {
+								"type": "number",
+								"format": "double"
+							}
+						},
+						"type": "object"
+					}
+				]
+			},
+			"CreateUserResponseDto": {
+				"properties": {
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"email": {
+						"type": "string"
+					},
+					"preferredName": {
+						"type": "string"
+					},
+					"fullName": {
+						"type": "string"
+					},
+					"id": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"updatedAt",
+					"createdAt",
+					"email",
+					"preferredName",
+					"fullName",
+					"id"
+				],
+				"type": "object"
+			},
+			"CreateUserRequestDto": {
+				"properties": {
+					"email": {
+						"type": "string"
+					},
+					"preferredName": {
+						"type": "string"
+					},
+					"fullName": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"email",
+					"preferredName",
+					"fullName"
+				],
+				"type": "object"
+			},
+			"CourseFileResponseDto": {
+				"properties": {
+					"updatedAt": {
+						"type": "string"
+					},
+					"createdAt": {
+						"type": "string"
+					},
+					"uploadedBy": {
+						"properties": {
+							"email": {
+								"type": "string"
+							},
+							"fullName": {
+								"type": "string"
+							},
+							"id": {
+								"$ref": "#/components/schemas/Id"
+							}
+						},
+						"required": [
+							"email",
+							"fullName",
+							"id"
+						],
+						"type": "object"
+					},
+					"mimeType": {
+						"type": "string"
+					},
+					"fileSize": {
+						"type": "number",
+						"format": "double"
+					},
+					"filePath": {
+						"type": "string"
+					},
+					"courseId": {
+						"$ref": "#/components/schemas/Id"
+					},
+					"id": {
+						"$ref": "#/components/schemas/Id"
+					}
+				},
+				"required": [
+					"updatedAt",
+					"createdAt",
+					"uploadedBy",
+					"mimeType",
+					"fileSize",
+					"filePath",
+					"courseId",
+					"id"
+				],
+				"type": "object"
+			},
+			"DownloadUrlResponseDto": {
+				"properties": {
+					"url": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"url"
+				],
+				"type": "object"
+			},
+			"CalendarResponseDto": {
+				"properties": {
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"isShared": {
+						"type": "boolean"
+					},
+					"userId": {
+						"allOf": [
+							{
+								"$ref": "#/components/schemas/Id"
+							}
+						],
+						"nullable": true
+					},
+					"courseId": {
+						"allOf": [
+							{
+								"$ref": "#/components/schemas/Id"
+							}
+						],
+						"nullable": true
+					},
+					"description": {
+						"type": "string",
+						"nullable": true
+					},
+					"name": {
+						"type": "string"
+					},
+					"id": {
+						"$ref": "#/components/schemas/Id"
+					}
+				},
+				"required": [
+					"updatedAt",
+					"createdAt",
+					"isShared",
+					"userId",
+					"courseId",
+					"description",
+					"name",
+					"id"
+				],
+				"type": "object"
+			},
+			"CreateCalendarRequestDto": {
+				"properties": {
+					"isShared": {
+						"type": "boolean"
+					},
+					"courseId": {
+						"$ref": "#/components/schemas/Id"
+					},
+					"description": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"name"
+				],
+				"type": "object"
+			},
+			"Record_string.any_": {
+				"properties": {},
+				"additionalProperties": {},
+				"type": "object",
+				"description": "Construct a type with a set of properties K of type T"
+			},
+			"CalendarEventResponseDto": {
+				"properties": {
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"metadata": {
+						"allOf": [
+							{
+								"$ref": "#/components/schemas/Record_string.any_"
+							}
+						],
+						"nullable": true
+					},
+					"isAllDay": {
+						"type": "boolean"
+					},
+					"color": {
+						"type": "string",
+						"nullable": true
+					},
+					"eventType": {
+						"type": "string",
+						"nullable": true
+					},
+					"calendarId": {
+						"$ref": "#/components/schemas/Id"
+					},
+					"endDate": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"startDate": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"description": {
+						"type": "string",
+						"nullable": true
+					},
+					"title": {
+						"type": "string"
+					},
+					"id": {
+						"$ref": "#/components/schemas/Id"
+					}
+				},
+				"required": [
+					"updatedAt",
+					"createdAt",
+					"metadata",
+					"isAllDay",
+					"color",
+					"eventType",
+					"calendarId",
+					"endDate",
+					"startDate",
+					"description",
+					"title",
+					"id"
+				],
+				"type": "object"
+			},
+			"CreateCalendarEventRequestDto": {
+				"properties": {
+					"metadata": {
+						"$ref": "#/components/schemas/Record_string.any_"
+					},
+					"isAllDay": {
+						"type": "boolean"
+					},
+					"color": {
+						"type": "string"
+					},
+					"eventType": {
+						"type": "string"
+					},
+					"calendarId": {
+						"$ref": "#/components/schemas/Id"
+					},
+					"endDate": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"startDate": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"description": {
+						"type": "string"
+					},
+					"title": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"calendarId",
+					"endDate",
+					"startDate",
+					"title"
+				],
+				"type": "object"
+			},
+			"UpdateCalendarEventRequestDto": {
+				"properties": {
+					"metadata": {
+						"$ref": "#/components/schemas/Record_string.any_"
+					},
+					"isAllDay": {
+						"type": "boolean"
+					},
+					"color": {
+						"type": "string"
+					},
+					"eventType": {
+						"type": "string"
+					},
+					"endDate": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"startDate": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"description": {
+						"type": "string"
+					},
+					"title": {
+						"type": "string"
+					}
+				},
+				"type": "object"
+			},
+			"MessageResponseDto": {
+				"properties": {
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"content": {
+						"type": "string"
+					},
+					"role": {
+						"type": "string",
+						"enum": [
+							"user",
+							"assistant"
+						]
+					},
+					"conversationId": {
+						"type": "number",
+						"format": "double"
+					},
+					"id": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"createdAt",
+					"content",
+					"role",
+					"conversationId",
+					"id"
+				],
+				"type": "object"
+			},
+			"MessagesListResponseDto": {
+				"properties": {
+					"messages": {
+						"items": {
+							"$ref": "#/components/schemas/MessageResponseDto"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"messages"
+				],
+				"type": "object"
+			},
+			"ChatResponseDto": {
+				"properties": {
+					"assistantMessage": {
+						"$ref": "#/components/schemas/MessageResponseDto"
+					},
+					"userMessage": {
+						"$ref": "#/components/schemas/MessageResponseDto"
+					}
+				},
+				"required": [
+					"assistantMessage",
+					"userMessage"
+				],
+				"type": "object"
+			},
+			"SendMessageRequestDto": {
+				"properties": {
+					"content": {
+						"type": "string",
+						"minLength": 1
+					}
+				},
+				"required": [
+					"content"
+				],
+				"type": "object"
+			},
+			"RoleListItemResponseDto": {
+				"properties": {
+					"members": {
+						"items": {
+							"$ref": "#/components/schemas/Id"
+						},
+						"type": "array"
+					},
+					"memberCount": {
+						"type": "number",
+						"format": "double"
+					},
+					"permissionCount": {
+						"type": "number",
+						"format": "double"
+					},
+					"name": {
+						"type": "string"
+					},
+					"id": {
+						"$ref": "#/components/schemas/Id"
+					}
+				},
+				"required": [
+					"members",
+					"memberCount",
+					"permissionCount",
+					"name",
+					"id"
+				],
+				"type": "object"
+			},
+			"PermissionResponseDto": {
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"id": {
+						"$ref": "#/components/schemas/Id"
+					}
+				},
+				"required": [
+					"name",
+					"id"
+				],
+				"type": "object"
+			},
+			"RoleResponseDto": {
+				"properties": {
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"permissions": {
+						"items": {
+							"$ref": "#/components/schemas/PermissionResponseDto"
+						},
+						"type": "array"
+					},
+					"courseId": {
+						"$ref": "#/components/schemas/Id"
+					},
+					"name": {
+						"type": "string"
+					},
+					"id": {
+						"$ref": "#/components/schemas/Id"
+					}
+				},
+				"required": [
+					"updatedAt",
+					"createdAt",
+					"permissions",
+					"courseId",
+					"name",
+					"id"
+				],
+				"type": "object"
+			},
+			"CreateRoleRequestDto": {
+				"properties": {
+					"permissionIds": {
+						"items": {
+							"$ref": "#/components/schemas/Id"
+						},
+						"type": "array",
+						"minItems": 1
+					},
+					"name": {
+						"type": "string",
+						"minLength": 1
+					}
+				},
+				"required": [
+					"permissionIds",
+					"name"
+				],
+				"type": "object"
+			},
+			"UpdateRoleRequestDto": {
+				"properties": {
+					"permissionIds": {
+						"items": {
+							"$ref": "#/components/schemas/Id"
+						},
+						"type": "array",
+						"minItems": 1
+					},
+					"name": {
+						"type": "string",
+						"minLength": 1
+					}
+				},
+				"required": [
+					"permissionIds",
+					"name"
+				],
+				"type": "object"
+			},
+			"SignupResponseDto": {
+				"properties": {
+					"email": {
+						"type": "string"
+					},
+					"userId": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"email",
+					"userId"
+				],
+				"type": "object"
+			},
+			"SignupRequestDto": {
+				"properties": {
+					"password": {
+						"type": "string"
+					},
+					"email": {
+						"type": "string"
+					},
+					"preferredName": {
+						"type": "string"
+					},
+					"fullName": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"password",
+					"email",
+					"preferredName",
+					"fullName"
+				],
+				"type": "object"
+			},
+			"LoginResponseDto": {
+				"properties": {
+					"refreshToken": {
+						"type": "string"
+					},
+					"accessToken": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"refreshToken",
+					"accessToken"
+				],
+				"type": "object"
+			},
+			"LoginRequestDto": {
+				"properties": {
+					"password": {
+						"type": "string"
+					},
+					"email": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"password",
+					"email"
+				],
+				"type": "object"
+			},
+			"OAuthProvider": {
+				"type": "string",
+				"enum": [
+					"github"
+				],
+				"nullable": false
+			},
+			"TokenExchangeRequestDto": {
+				"properties": {
+					"redirectUri": {
+						"type": "string"
+					},
+					"code": {
+						"type": "string"
+					},
+					"provider": {
+						"$ref": "#/components/schemas/OAuthProvider"
+					}
+				},
+				"required": [
+					"redirectUri",
+					"code",
+					"provider"
+				],
+				"type": "object"
+			}
+		},
+		"securitySchemes": {
+			"bearerAuth": {
+				"type": "http",
+				"scheme": "bearer",
+				"bearerFormat": "JWT"
+			}
+		}
+	},
+	"info": {
+		"title": "@repo/client-backend",
+		"version": "0.0.0",
+		"contact": {}
+	},
+	"paths": {
+		"/api/v1/analytics/chat/message-count": {
+			"get": {
+				"operationId": "GetChatSentMessageCount",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ChatMessageCountResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"description": "Get total chat messages sent in a course within a time range",
+				"tags": [
+					"Analytics"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "courseId",
+						"required": true,
+						"schema": {
+							"$ref": "#/components/schemas/Id"
+						}
+					},
+					{
+						"in": "query",
+						"name": "startDate",
+						"required": true,
+						"schema": {
+							"format": "date-time",
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "endDate",
+						"required": true,
+						"schema": {
+							"format": "date-time",
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/api/v1/discussions": {
+			"get": {
+				"operationId": "GetDiscussions",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/DiscussionResponseDto"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Discussion"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "courseId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			},
+			"post": {
+				"operationId": "CreateDiscussion",
+				"responses": {
+					"201": {
+						"description": "Created",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DiscussionResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"description": "Create a new discussion in a category.",
+				"tags": [
+					"Discussion"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateDiscussionRequestDto"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/discussions/{discussionId}/posts": {
+			"get": {
+				"operationId": "GetDiscussionPosts",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DiscussionPostsResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Discussion"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "discussionId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/api/v1/discussions/{discussionId}/reply": {
+			"post": {
+				"operationId": "ReplyToDiscussion",
+				"responses": {
+					"201": {
+						"description": "Created",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CreateDiscussionCommentResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Discussion"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "discussionId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateDiscussionCommentRequestDto"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/conversations": {
+			"get": {
+				"operationId": "GetConversations",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ConversationListResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"description": "Get all conversations for the current user in a specific course",
+				"tags": [
+					"Conversation"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "courseId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			},
+			"post": {
+				"operationId": "CreateConversation",
+				"responses": {
+					"201": {
+						"description": "Created",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ConversationResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"description": "Create a new conversation",
+				"tags": [
+					"Conversation"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateConversationRequestDto"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/conversations/{conversationId}": {
+			"get": {
+				"operationId": "GetConversation",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ConversationResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"description": "Get a specific conversation by ID",
+				"tags": [
+					"Conversation"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "conversationId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			},
+			"delete": {
+				"operationId": "DeleteConversation",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ConversationResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"description": "Delete a conversation and all its messages",
+				"tags": [
+					"Conversation"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "conversationId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/api/v1/courses/{courseId}/members": {
+			"get": {
+				"operationId": "GetCourseMembers",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/CourseMemberResponseDto"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"description": "Get all members of a course.",
+				"tags": [
+					"Course Members"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "courseId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			},
+			"post": {
+				"operationId": "AddCourseMembers",
+				"responses": {
+					"201": {
+						"description": "Created",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/CourseMemberResponseDto"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"description": "Add members to a course by email.",
+				"tags": [
+					"Course Members"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "courseId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/AddCourseMemberRequestDto"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/chapters/by-course": {
+			"get": {
+				"operationId": "GetChaptersByCourse",
+				"responses": {
+					"200": {
+						"description": "A list of course chapters with their modules, in order.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/CourseChaptersResponseDto"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"description": "Get modules by course ID.",
+				"tags": [
+					"Chapter"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"description": "The ID of the course to fetch modules for.",
+						"in": "query",
+						"name": "courseId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/api/v1/chapters": {
+			"post": {
+				"operationId": "NewChapter",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CourseChaptersResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Chapter"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "courseId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateChapterRequestDto"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/chapters/reorder": {
+			"post": {
+				"operationId": "ReorderChapters",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/CourseChaptersResponseDto"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Chapter"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "courseId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"items": {
+									"type": "number",
+									"format": "double"
+								},
+								"type": "array"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/": {
+			"get": {
+				"operationId": "GetHealth",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				},
+				"description": "Gets the health status of the server.",
+				"tags": [
+					"Debug"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"description": "A name to greet.",
+						"in": "query",
+						"name": "name",
+						"required": false,
+						"schema": {
+							"$ref": "#/components/schemas/Name"
+						}
+					}
+				]
+			}
+		},
+		"/protected": {
+			"get": {
+				"operationId": "GetProtectedHealth",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				},
+				"description": "Gets the health status of the server (protected). Requires authentication.\nUseful for testing authentication logic.",
+				"tags": [
+					"Debug"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"description": "A name to greet.",
+						"in": "query",
+						"name": "name",
+						"required": false,
+						"schema": {
+							"$ref": "#/components/schemas/Name"
+						}
+					}
+				]
+			}
+		},
+		"/api/v1/courses": {
+			"get": {
+				"operationId": "GetAllCoursesForUser",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/CourseListItemResponseDto"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Courses"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": []
+			},
+			"post": {
+				"operationId": "CreateCourse",
+				"responses": {
+					"201": {
+						"description": "Created",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CourseListItemResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Courses"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateCourseResponseDto"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/.well-known/jwks.json": {
+			"get": {
+				"operationId": "GetJwks",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"keys": {
+											"items": {
+												"properties": {
+													"e": {
+														"type": "string"
+													},
+													"n": {},
+													"kid": {
+														"type": "string"
+													},
+													"alg": {
+														"type": "string"
+													},
+													"use": {
+														"type": "string"
+													},
+													"kty": {
+														"type": "string"
+													}
+												},
+												"required": [
+													"e",
+													"n",
+													"kid",
+													"alg",
+													"use",
+													"kty"
+												],
+												"type": "object"
+											},
+											"type": "array"
+										}
+									},
+									"required": [
+										"keys"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"description": "Return JWKS (JSON Web Key Set)",
+				"tags": [
+					"Well-Known"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/openai/count-tokens": {
+			"post": {
+				"operationId": "CountTokens",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"tokenCount": {
+											"type": "number",
+											"format": "double"
+										},
+										"message": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"tokenCount",
+										"message"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Debug"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"text": {
+										"type": "string",
+										"description": "The text to count tokens for."
+									}
+								},
+								"required": [
+									"text"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/analytics/content/most-accessed": {
+			"get": {
+				"operationId": "GetMostAccessedMaterials",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/MostAccessedMaterialsResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"description": "Get most accessed materials",
+				"tags": [
+					"Analytics"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "courseId",
+						"required": true,
+						"schema": {
+							"$ref": "#/components/schemas/Id"
+						}
+					},
+					{
+						"in": "query",
+						"name": "startDate",
+						"required": true,
+						"schema": {
+							"format": "date-time",
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "endDate",
+						"required": true,
+						"schema": {
+							"format": "date-time",
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/api/v1/analytics/content/average-time": {
+			"get": {
+				"operationId": "GetAverageTimeSpent",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/AverageTimeSpentResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"description": "Get average time spent on content type",
+				"tags": [
+					"Analytics"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "courseId",
+						"required": true,
+						"schema": {
+							"$ref": "#/components/schemas/Id"
+						}
+					}
+				]
+			}
+		},
+		"/api/v1/analytics/content/engagement-over-time": {
+			"get": {
+				"operationId": "GetContentEngagement",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ContentEngagementOverTimeResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"description": "Get content engagement over time",
+				"tags": [
+					"Analytics"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "courseId",
+						"required": true,
+						"schema": {
+							"$ref": "#/components/schemas/Id"
+						}
+					},
+					{
+						"in": "query",
+						"name": "startDate",
+						"required": true,
+						"schema": {
+							"format": "date-time",
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "endDate",
+						"required": true,
+						"schema": {
+							"format": "date-time",
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/api/v1/analytics/content/record": {
+			"post": {
+				"operationId": "RecordContentActivity",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/RecordContentActivityResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"description": "Record a content activity",
+				"tags": [
+					"Analytics"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/RecordContentActivityRequestDto"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/modules": {
+			"post": {
+				"operationId": "NewModule",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ReorderModulesResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Module"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "chapterId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateModuleRequestDto"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/modules/reorder": {
+			"post": {
+				"operationId": "ReorderModules",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ReorderModulesResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Module"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "chapterId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"items": {
+									"type": "number",
+									"format": "double"
+								},
+								"type": "array"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/analytics/user/active-users": {
+			"get": {
+				"operationId": "GetActiveUsersCount",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ActiveUsersResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"description": "Get active users count within a time range.",
+				"tags": [
+					"Analytics"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "startDate",
+						"required": true,
+						"schema": {
+							"format": "date-time",
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "endDate",
+						"required": true,
+						"schema": {
+							"format": "date-time",
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "courseId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/api/v1/analytics/user/active-users-over-time": {
+			"get": {
+				"operationId": "GetActiveUsersOverTime",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ActiveUsersOverTimeResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"description": "Get active users over time.",
+				"tags": [
+					"Analytics"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "startDate",
+						"required": true,
+						"schema": {
+							"format": "date-time",
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "endDate",
+						"required": true,
+						"schema": {
+							"format": "date-time",
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "courseId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/api/v1/analytics/user/clicks": {
+			"get": {
+				"operationId": "GetClickAnalytics",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ClickAnalyticsResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"description": "Get click analytics",
+				"tags": [
+					"Analytics"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "startDate",
+						"required": true,
+						"schema": {
+							"format": "date-time",
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "endDate",
+						"required": true,
+						"schema": {
+							"format": "date-time",
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "courseId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/api/v1/analytics/user/page-views": {
+			"get": {
+				"operationId": "GetPageViewsStats",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/PageViewsStatsResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"description": "Get page views statistics",
+				"tags": [
+					"Analytics"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "startDate",
+						"required": true,
+						"schema": {
+							"format": "date-time",
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "endDate",
+						"required": true,
+						"schema": {
+							"format": "date-time",
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "courseId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/api/v1/analytics/user/record": {
+			"post": {
+				"operationId": "RecordUserActivity",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/RecordUserActivityResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"description": "Record a user activity",
+				"tags": [
+					"Analytics"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/RecordUserActivityRequestDto"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/users": {
+			"post": {
+				"operationId": "CreateUser",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CreateUserResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Users"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateUserRequestDto"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/streams/lorem-ipsum": {
+			"get": {
+				"operationId": "GetLoremIpsumStream",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "string",
+									"format": "byte"
+								}
+							}
+						}
+					}
+				},
+				"description": "Gets a dummy paragraph as a readable stream from the server.",
+				"tags": [
+					"Debug"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/streams/ai-response": {
+			"get": {
+				"operationId": "GetAiResponseStream",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "string",
+									"format": "byte"
+								}
+							}
+						}
+					}
+				},
+				"description": "Gets a streamed AI response from OpenAI, parsed to extract content only,\nsimilar to how a chat UI would consume it.",
+				"tags": [
+					"Debug"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/streams/raw-ai-response": {
+			"get": {
+				"operationId": "GetRawAiResponseStream",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "string",
+									"format": "byte"
+								}
+							}
+						}
+					}
+				},
+				"description": "Gets the raw streamed AI response from OpenAI.",
+				"tags": [
+					"Debug"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/api/v1/courses/{courseId}/files/upload": {
+			"post": {
+				"operationId": "UploadFileToCourse",
+				"responses": {
+					"201": {
+						"description": "Created",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CourseFileResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"description": "Upload a file to a course.",
+				"tags": [
+					"Course Files"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "courseId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"multipart/form-data": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"file": {
+										"type": "string",
+										"format": "binary"
+									},
+									"folderPath": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"file"
+								]
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/courses/{courseId}/files": {
+			"get": {
+				"operationId": "ListFilesForCourse",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/CourseFileResponseDto"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"description": "List all files for a course.",
+				"tags": [
+					"Course Files"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "courseId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "folderPath",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/api/v1/courses/{courseId}/files/{fileId}/download-url": {
+			"get": {
+				"operationId": "GetFileDownloadUrl",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DownloadUrlResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"description": "Get download URL for a file.",
+				"tags": [
+					"Course Files"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "courseId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "path",
+						"name": "fileId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/api/v1/courses/{courseId}/files/{fileId}": {
+			"delete": {
+				"operationId": "DeleteFileFromCourse",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"description": "Delete a file.",
+				"tags": [
+					"Course Files"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "courseId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "path",
+						"name": "fileId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/storage/list": {
+			"get": {
+				"operationId": "ListFiles",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"type": "string"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Debug"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "prefix",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/storage/download-url": {
+			"get": {
+				"operationId": "GetDownloadUrl",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Debug"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/storage/upload": {
+			"post": {
+				"operationId": "UploadFile",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"tags": [
+					"Debug"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"multipart/form-data": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"file": {
+										"type": "string",
+										"format": "binary"
+									}
+								},
+								"required": [
+									"file"
+								]
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/calendars": {
+			"get": {
+				"operationId": "GetAllCalendars",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/CalendarResponseDto"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Calendars"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": []
+			},
+			"post": {
+				"operationId": "CreateCalendar",
+				"responses": {
+					"201": {
+						"description": "Created",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CalendarResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Calendars"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateCalendarRequestDto"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/calendars/{calendarId}/events": {
+			"get": {
+				"operationId": "GetCalendarEvents",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/CalendarEventResponseDto"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Calendars"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "calendarId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "startDate",
+						"required": true,
+						"schema": {
+							"format": "date-time",
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "endDate",
+						"required": true,
+						"schema": {
+							"format": "date-time",
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "eventType",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			},
+			"post": {
+				"operationId": "CreateCalendarEvent",
+				"responses": {
+					"201": {
+						"description": "Created",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CalendarEventResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Calendars"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "calendarId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateCalendarEventRequestDto"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/calendars/events/{eventId}": {
+			"put": {
+				"operationId": "UpdateCalendarEvent",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CalendarEventResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Calendars"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "eventId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UpdateCalendarEventRequestDto"
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"operationId": "DeleteCalendarEvent",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CalendarEventResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Calendars"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "eventId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/api/v1/conversations/{conversationId}/messages": {
+			"get": {
+				"operationId": "GetMessages",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/MessagesListResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"description": "Get all messages in a conversation",
+				"tags": [
+					"Messages"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "conversationId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			},
+			"post": {
+				"operationId": "SendMessage",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ChatResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"description": "Send a message and get AI response",
+				"tags": [
+					"Messages"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "conversationId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/SendMessageRequestDto"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/courses/{courseId}/roles": {
+			"get": {
+				"operationId": "GetCourseRoles",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/RoleListItemResponseDto"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"description": "Get all roles for a course.",
+				"tags": [
+					"Roles"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "courseId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			},
+			"post": {
+				"operationId": "CreateRole",
+				"responses": {
+					"201": {
+						"description": "Created",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/RoleResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"description": "Create a custom role.",
+				"tags": [
+					"Roles"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "courseId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateRoleRequestDto"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/courses/{courseId}/roles/permissions": {
+			"get": {
+				"operationId": "GetAllPermissions",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/PermissionResponseDto"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"description": "Get all available permissions.",
+				"tags": [
+					"Roles"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "courseId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/api/v1/courses/{courseId}/roles/{roleId}": {
+			"get": {
+				"operationId": "GetRole",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/RoleResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"description": "Get a specific role with full details.",
+				"tags": [
+					"Roles"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "courseId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "path",
+						"name": "roleId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			},
+			"put": {
+				"operationId": "UpdateRole",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/RoleResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"description": "Update a role.",
+				"tags": [
+					"Roles"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "courseId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "path",
+						"name": "roleId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UpdateRoleRequestDto"
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"operationId": "DeleteRole",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/RoleResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"description": "Delete a role.",
+				"tags": [
+					"Roles"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "courseId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "path",
+						"name": "roleId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/api/v1/auth/signup": {
+			"post": {
+				"operationId": "Signup",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/SignupResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Auth"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/SignupRequestDto"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/auth/login": {
+			"post": {
+				"operationId": "Login",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/LoginResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Auth"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/LoginRequestDto"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/auth/refresh": {
+			"post": {
+				"operationId": "RefreshAuth",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/LoginResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Auth"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/api/v1/auth/oauth2/callback": {
+			"post": {
+				"operationId": "OauthCallback",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/LoginResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"description": "OAuth2 token exchange and login/signup.",
+				"tags": [
+					"Auth"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/TokenExchangeRequestDto"
+							}
+						}
+					}
+				}
+			}
+		}
+	},
+	"servers": [
+		{
+			"url": "/"
+		}
+	]
+}
