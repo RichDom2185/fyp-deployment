@@ -1,1 +1,0 @@
-import{M as e,O as t,u as n}from"./index-BhFOQNBT.js";var r=t(e(),1);n();var i=r.createContext(void 0);function a(e){let t=r.useContext(i);return e||t||`ltr`}export{a as b};

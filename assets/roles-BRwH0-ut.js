@@ -1,1 +1,0 @@
-import{O as e,u as t}from"./index-BhFOQNBT.js";var n=e(t());const r={breadcrumb:`Role Settings`},i=()=>(0,n.jsx)(`div`,{children:`Roles Settings Page`}),a=i;a.displayName=`RoleSettings`;var o=a;export{a as Component,o as default,r as handle};
