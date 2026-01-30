@@ -1,1 +1,0 @@
-import{O as e,u as t}from"./index-Bs8aadkd.js";var n=e(t());const r=()=>(0,n.jsx)(`div`,{className:`flex h-screen w-screen items-center justify-center bg-gray-100`,children:(0,n.jsx)(`h1`,{className:`text-4xl font-bold text-blue-600`,children:`Hello, World!`})}),i=r;i.displayName=`Home`;var a=i;export{i as Component,a as default};

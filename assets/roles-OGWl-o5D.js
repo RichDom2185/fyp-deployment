@@ -1,0 +1,1 @@
+import{K as e,w as t}from"./index-DkHy_0vr.js";var n=e(t());const r={breadcrumb:`Role Settings`},i=()=>(0,n.jsx)(`div`,{children:`Roles Settings Page`});i.displayName=`RoleSettings`;var a=i;export{i as Component,a as default,r as handle};

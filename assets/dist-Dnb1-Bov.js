@@ -1,0 +1,1 @@
+import{K as e,W as t,w as n}from"./index-DkHy_0vr.js";var r=e(t(),1);n();var i=r.createContext(void 0);function a(e){let t=r.useContext(i);return e||t||`ltr`}export{a as t};

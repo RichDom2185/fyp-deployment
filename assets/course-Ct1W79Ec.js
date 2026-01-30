@@ -1,0 +1,1 @@
+import{K as e,w as t}from"./index-DkHy_0vr.js";var n=e(t());const r={breadcrumb:`Course Settings`},i=()=>(0,n.jsx)(`div`,{children:`Course Settings Page`});i.displayName=`CourseSettings`;var a=i;export{i as Component,a as default,r as handle};

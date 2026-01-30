@@ -1,1 +1,0 @@
-import{O as e,u as t}from"./index-Bs8aadkd.js";var n=e(t());const r={breadcrumb:`Course Settings`},i=()=>(0,n.jsx)(`div`,{children:`Course Settings Page`}),a=i;a.displayName=`CourseSettings`;var o=a;export{a as Component,o as default,r as handle};
