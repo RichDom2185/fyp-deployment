@@ -295,6 +295,839 @@
 				],
 				"type": "object"
 			},
+			"QuizListItemResponseDto": {
+				"properties": {
+					"inProgressAttemptId": {
+						"allOf": [
+							{
+								"$ref": "#/components/schemas/Id"
+							}
+						],
+						"nullable": true
+					},
+					"hasInProgressAttempt": {
+						"type": "boolean"
+					},
+					"bestScore": {
+						"type": "number",
+						"format": "double",
+						"nullable": true
+					},
+					"maxAttempts": {
+						"type": "number",
+						"format": "double",
+						"nullable": true
+					},
+					"attemptsUsed": {
+						"type": "number",
+						"format": "double"
+					},
+					"timeLimit": {
+						"type": "number",
+						"format": "double",
+						"nullable": true
+					},
+					"questionCount": {
+						"type": "number",
+						"format": "double"
+					},
+					"dueDate": {
+						"type": "string",
+						"format": "date-time",
+						"nullable": true
+					},
+					"title": {
+						"type": "string"
+					},
+					"id": {
+						"$ref": "#/components/schemas/Id"
+					}
+				},
+				"required": [
+					"maxAttempts",
+					"timeLimit",
+					"questionCount",
+					"dueDate",
+					"title",
+					"id"
+				],
+				"type": "object"
+			},
+			"QuizResponseDto": {
+				"properties": {
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"questionCount": {
+						"type": "number",
+						"format": "double"
+					},
+					"createdBy": {
+						"properties": {
+							"name": {
+								"type": "string"
+							},
+							"id": {
+								"$ref": "#/components/schemas/Id"
+							}
+						},
+						"required": [
+							"name",
+							"id"
+						],
+						"type": "object"
+					},
+					"dueDate": {
+						"type": "string",
+						"format": "date-time",
+						"nullable": true
+					},
+					"showCorrectAnswers": {
+						"type": "boolean"
+					},
+					"shuffleQuestions": {
+						"type": "boolean"
+					},
+					"isTimed": {
+						"type": "boolean"
+					},
+					"passingScore": {
+						"type": "number",
+						"format": "double",
+						"nullable": true
+					},
+					"maxAttempts": {
+						"type": "number",
+						"format": "double",
+						"nullable": true
+					},
+					"timeLimit": {
+						"type": "number",
+						"format": "double",
+						"nullable": true
+					},
+					"description": {
+						"type": "string",
+						"nullable": true
+					},
+					"title": {
+						"type": "string"
+					},
+					"courseId": {
+						"$ref": "#/components/schemas/Id"
+					},
+					"id": {
+						"$ref": "#/components/schemas/Id"
+					}
+				},
+				"required": [
+					"updatedAt",
+					"createdAt",
+					"createdBy",
+					"dueDate",
+					"showCorrectAnswers",
+					"shuffleQuestions",
+					"isTimed",
+					"passingScore",
+					"maxAttempts",
+					"timeLimit",
+					"description",
+					"title",
+					"courseId",
+					"id"
+				],
+				"type": "object"
+			},
+			"CreateQuizRequestDto": {
+				"properties": {
+					"dueDate": {
+						"type": "string",
+						"nullable": true
+					},
+					"showCorrectAnswers": {
+						"type": "boolean"
+					},
+					"shuffleQuestions": {
+						"type": "boolean"
+					},
+					"isTimed": {
+						"type": "boolean"
+					},
+					"passingScore": {
+						"type": "number",
+						"format": "double",
+						"nullable": true,
+						"minimum": 0,
+						"maximum": 100
+					},
+					"maxAttempts": {
+						"type": "number",
+						"format": "double",
+						"nullable": true,
+						"minimum": 1
+					},
+					"timeLimit": {
+						"type": "number",
+						"format": "double",
+						"nullable": true,
+						"minimum": 1
+					},
+					"description": {
+						"type": "string",
+						"nullable": true
+					},
+					"title": {
+						"type": "string",
+						"minLength": 1
+					}
+				},
+				"required": [
+					"title"
+				],
+				"type": "object"
+			},
+			"UpdateQuizRequestDto": {
+				"properties": {
+					"dueDate": {
+						"type": "string",
+						"nullable": true
+					},
+					"showCorrectAnswers": {
+						"type": "boolean"
+					},
+					"shuffleQuestions": {
+						"type": "boolean"
+					},
+					"isTimed": {
+						"type": "boolean"
+					},
+					"passingScore": {
+						"type": "number",
+						"format": "double",
+						"nullable": true,
+						"minimum": 0,
+						"maximum": 100
+					},
+					"maxAttempts": {
+						"type": "number",
+						"format": "double",
+						"nullable": true,
+						"minimum": 1
+					},
+					"timeLimit": {
+						"type": "number",
+						"format": "double",
+						"nullable": true,
+						"minimum": 1
+					},
+					"description": {
+						"type": "string",
+						"nullable": true
+					},
+					"title": {
+						"type": "string"
+					}
+				},
+				"type": "object"
+			},
+			"QuestionTypeDto": {
+				"enum": [
+					"multiple_choice",
+					"short_answer"
+				],
+				"type": "string"
+			},
+			"QuestionResponseDto": {
+				"properties": {
+					"correctAnswer": {
+						"anyOf": [
+							{
+								"type": "string"
+							},
+							{
+								"type": "number",
+								"format": "double"
+							},
+							{
+								"items": {
+									"type": "number",
+									"format": "double"
+								},
+								"type": "array"
+							}
+						],
+						"nullable": true
+					},
+					"options": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array",
+						"nullable": true
+					},
+					"order": {
+						"type": "number",
+						"format": "double"
+					},
+					"points": {
+						"type": "number",
+						"format": "double"
+					},
+					"questionType": {
+						"$ref": "#/components/schemas/QuestionTypeDto"
+					},
+					"questionText": {
+						"type": "string"
+					},
+					"id": {
+						"$ref": "#/components/schemas/Id"
+					}
+				},
+				"required": [
+					"options",
+					"order",
+					"points",
+					"questionType",
+					"questionText",
+					"id"
+				],
+				"type": "object"
+			},
+			"CreateQuestionRequestDto": {
+				"properties": {
+					"correctAnswer": {
+						"anyOf": [
+							{
+								"type": "string"
+							},
+							{
+								"type": "number",
+								"format": "double"
+							},
+							{
+								"items": {
+									"type": "number",
+									"format": "double"
+								},
+								"type": "array"
+							}
+						],
+						"nullable": true
+					},
+					"options": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array",
+						"nullable": true
+					},
+					"order": {
+						"type": "number",
+						"format": "double",
+						"minimum": 0
+					},
+					"points": {
+						"type": "number",
+						"format": "double",
+						"minimum": 0
+					},
+					"questionType": {
+						"$ref": "#/components/schemas/QuestionTypeDto"
+					},
+					"questionText": {
+						"type": "string",
+						"minLength": 1
+					}
+				},
+				"required": [
+					"order",
+					"points",
+					"questionType",
+					"questionText"
+				],
+				"type": "object"
+			},
+			"UpdateQuestionRequestDto": {
+				"properties": {
+					"correctAnswer": {
+						"anyOf": [
+							{
+								"type": "string"
+							},
+							{
+								"type": "number",
+								"format": "double"
+							},
+							{
+								"items": {
+									"type": "number",
+									"format": "double"
+								},
+								"type": "array"
+							}
+						],
+						"nullable": true
+					},
+					"options": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array",
+						"nullable": true
+					},
+					"order": {
+						"type": "number",
+						"format": "double"
+					},
+					"points": {
+						"type": "number",
+						"format": "double"
+					},
+					"questionType": {
+						"$ref": "#/components/schemas/QuestionTypeDto"
+					},
+					"questionText": {
+						"type": "string"
+					}
+				},
+				"type": "object"
+			},
+			"QuestionForStudentResponseDto": {
+				"properties": {
+					"options": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array",
+						"nullable": true
+					},
+					"order": {
+						"type": "number",
+						"format": "double"
+					},
+					"points": {
+						"type": "number",
+						"format": "double"
+					},
+					"questionType": {
+						"$ref": "#/components/schemas/QuestionTypeDto"
+					},
+					"questionText": {
+						"type": "string"
+					},
+					"id": {
+						"$ref": "#/components/schemas/Id"
+					}
+				},
+				"required": [
+					"options",
+					"order",
+					"points",
+					"questionType",
+					"questionText",
+					"id"
+				],
+				"type": "object"
+			},
+			"StartAttemptResponseDto": {
+				"properties": {
+					"questions": {
+						"items": {
+							"$ref": "#/components/schemas/QuestionForStudentResponseDto"
+						},
+						"type": "array"
+					},
+					"startedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"quizId": {
+						"$ref": "#/components/schemas/Id"
+					},
+					"id": {
+						"$ref": "#/components/schemas/Id"
+					}
+				},
+				"required": [
+					"questions",
+					"startedAt",
+					"quizId",
+					"id"
+				],
+				"type": "object"
+			},
+			"AttemptResponseDto": {
+				"properties": {
+					"isCompleted": {
+						"type": "boolean"
+					},
+					"maxScore": {
+						"type": "number",
+						"format": "double",
+						"nullable": true
+					},
+					"score": {
+						"type": "number",
+						"format": "double",
+						"nullable": true
+					},
+					"submittedAt": {
+						"type": "string",
+						"format": "date-time",
+						"nullable": true
+					},
+					"startedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"student": {
+						"properties": {
+							"name": {
+								"type": "string"
+							},
+							"id": {
+								"$ref": "#/components/schemas/Id"
+							}
+						},
+						"required": [
+							"name",
+							"id"
+						],
+						"type": "object"
+					},
+					"quizId": {
+						"$ref": "#/components/schemas/Id"
+					},
+					"id": {
+						"$ref": "#/components/schemas/Id"
+					}
+				},
+				"required": [
+					"isCompleted",
+					"maxScore",
+					"score",
+					"submittedAt",
+					"startedAt",
+					"student",
+					"quizId",
+					"id"
+				],
+				"type": "object"
+			},
+			"AnswerResponseDto": {
+				"properties": {
+					"correctAnswer": {
+						"anyOf": [
+							{
+								"type": "string"
+							},
+							{
+								"items": {
+									"type": "number",
+									"format": "double"
+								},
+								"type": "array"
+							}
+						],
+						"nullable": true
+					},
+					"pointsAwarded": {
+						"type": "number",
+						"format": "double",
+						"nullable": true
+					},
+					"isCorrect": {
+						"type": "boolean",
+						"nullable": true
+					},
+					"answer": {
+						"anyOf": [
+							{
+								"type": "string"
+							},
+							{
+								"items": {
+									"type": "number",
+									"format": "double"
+								},
+								"type": "array"
+							}
+						],
+						"nullable": true
+					},
+					"questionText": {
+						"type": "string"
+					},
+					"questionId": {
+						"$ref": "#/components/schemas/Id"
+					},
+					"id": {
+						"$ref": "#/components/schemas/Id"
+					}
+				},
+				"required": [
+					"pointsAwarded",
+					"isCorrect",
+					"answer",
+					"questionText",
+					"questionId",
+					"id"
+				],
+				"type": "object"
+			},
+			"AttemptDetailResponseDto": {
+				"properties": {
+					"answers": {
+						"items": {
+							"$ref": "#/components/schemas/AnswerResponseDto"
+						},
+						"type": "array"
+					},
+					"isCompleted": {
+						"type": "boolean"
+					},
+					"maxScore": {
+						"type": "number",
+						"format": "double",
+						"nullable": true
+					},
+					"score": {
+						"type": "number",
+						"format": "double",
+						"nullable": true
+					},
+					"submittedAt": {
+						"type": "string",
+						"format": "date-time",
+						"nullable": true
+					},
+					"startedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"quizId": {
+						"$ref": "#/components/schemas/Id"
+					},
+					"id": {
+						"$ref": "#/components/schemas/Id"
+					}
+				},
+				"required": [
+					"answers",
+					"isCompleted",
+					"maxScore",
+					"score",
+					"submittedAt",
+					"startedAt",
+					"quizId",
+					"id"
+				],
+				"type": "object"
+			},
+			"SubmitAnswerRequestDto": {
+				"properties": {
+					"answer": {
+						"anyOf": [
+							{
+								"type": "string"
+							},
+							{
+								"items": {
+									"type": "number",
+									"format": "double"
+								},
+								"type": "array"
+							}
+						],
+						"nullable": true
+					}
+				},
+				"required": [
+					"answer"
+				],
+				"type": "object"
+			},
+			"CompleteAttemptResponseDto": {
+				"properties": {
+					"submittedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"passed": {
+						"type": "boolean"
+					},
+					"maxScore": {
+						"type": "number",
+						"format": "double"
+					},
+					"score": {
+						"type": "number",
+						"format": "double"
+					},
+					"id": {
+						"$ref": "#/components/schemas/Id"
+					}
+				},
+				"required": [
+					"submittedAt",
+					"passed",
+					"maxScore",
+					"score",
+					"id"
+				],
+				"type": "object"
+			},
+			"GradeAnswerRequestDto": {
+				"properties": {
+					"pointsAwarded": {
+						"type": "number",
+						"format": "double",
+						"minimum": 0
+					},
+					"isCorrect": {
+						"type": "boolean"
+					}
+				},
+				"required": [
+					"pointsAwarded",
+					"isCorrect"
+				],
+				"type": "object"
+			},
+			"AttemptStatisticsDto": {
+				"properties": {
+					"isCompleted": {
+						"type": "boolean"
+					},
+					"passed": {
+						"type": "boolean",
+						"nullable": true
+					},
+					"percentage": {
+						"type": "number",
+						"format": "double",
+						"nullable": true
+					},
+					"maxScore": {
+						"type": "number",
+						"format": "double",
+						"nullable": true
+					},
+					"score": {
+						"type": "number",
+						"format": "double",
+						"nullable": true
+					},
+					"submittedAt": {
+						"type": "string",
+						"format": "date-time",
+						"nullable": true
+					},
+					"startedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"student": {
+						"properties": {
+							"role": {
+								"type": "string"
+							},
+							"email": {
+								"type": "string"
+							},
+							"name": {
+								"type": "string"
+							},
+							"id": {
+								"$ref": "#/components/schemas/Id"
+							}
+						},
+						"required": [
+							"role",
+							"email",
+							"name",
+							"id"
+						],
+						"type": "object"
+					},
+					"attemptId": {
+						"$ref": "#/components/schemas/Id"
+					}
+				},
+				"required": [
+					"isCompleted",
+					"passed",
+					"percentage",
+					"maxScore",
+					"score",
+					"submittedAt",
+					"startedAt",
+					"student",
+					"attemptId"
+				],
+				"type": "object"
+			},
+			"QuizStatisticsResponseDto": {
+				"properties": {
+					"attempts": {
+						"items": {
+							"$ref": "#/components/schemas/AttemptStatisticsDto"
+						},
+						"type": "array"
+					},
+					"passingRate": {
+						"type": "number",
+						"format": "double",
+						"nullable": true
+					},
+					"lowestScore": {
+						"type": "number",
+						"format": "double",
+						"nullable": true
+					},
+					"highestScore": {
+						"type": "number",
+						"format": "double",
+						"nullable": true
+					},
+					"averageScore": {
+						"type": "number",
+						"format": "double",
+						"nullable": true
+					},
+					"completedAttempts": {
+						"type": "number",
+						"format": "double"
+					},
+					"totalAttempts": {
+						"type": "number",
+						"format": "double"
+					},
+					"quizTitle": {
+						"type": "string"
+					},
+					"quizId": {
+						"$ref": "#/components/schemas/Id"
+					}
+				},
+				"required": [
+					"attempts",
+					"passingRate",
+					"lowestScore",
+					"highestScore",
+					"averageScore",
+					"completedAttempts",
+					"totalAttempts",
+					"quizTitle",
+					"quizId"
+				],
+				"type": "object"
+			},
 			"Email": {
 				"type": "string",
 				"pattern": "^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$"
@@ -486,6 +1319,87 @@
 					"name"
 				],
 				"type": "object"
+			},
+			"RsaOtherPrimesInfo": {
+				"properties": {
+					"d": {
+						"type": "string"
+					},
+					"r": {
+						"type": "string"
+					},
+					"t": {
+						"type": "string"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"JsonWebKey": {
+				"properties": {
+					"alg": {
+						"type": "string"
+					},
+					"crv": {
+						"type": "string"
+					},
+					"d": {
+						"type": "string"
+					},
+					"dp": {
+						"type": "string"
+					},
+					"dq": {
+						"type": "string"
+					},
+					"e": {
+						"type": "string"
+					},
+					"ext": {
+						"type": "boolean"
+					},
+					"k": {
+						"type": "string"
+					},
+					"key_ops": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					},
+					"kty": {
+						"type": "string"
+					},
+					"n": {
+						"type": "string"
+					},
+					"oth": {
+						"items": {
+							"$ref": "#/components/schemas/RsaOtherPrimesInfo"
+						},
+						"type": "array"
+					},
+					"p": {
+						"type": "string"
+					},
+					"q": {
+						"type": "string"
+					},
+					"qi": {
+						"type": "string"
+					},
+					"use": {
+						"type": "string"
+					},
+					"x": {
+						"type": "string"
+					},
+					"y": {
+						"type": "string"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
 			},
 			"MostAccessedMaterialsResponseDto": {
 				"properties": {
@@ -1471,6 +2385,80 @@
 				],
 				"type": "object"
 			},
+			"ConversionResponse": {
+				"allOf": [
+					{
+						"properties": {
+							"mimeType": {
+								"type": "string"
+							},
+							"name": {
+								"type": "string"
+							}
+						},
+						"required": [
+							"mimeType",
+							"name"
+						],
+						"type": "object"
+					},
+					{
+						"anyOf": [
+							{
+								"properties": {
+									"data": {
+										"type": "string"
+									},
+									"tokens": {
+										"type": "number",
+										"format": "double"
+									},
+									"format": {
+										"type": "string",
+										"enum": [
+											"markdown"
+										],
+										"nullable": false
+									}
+								},
+								"required": [
+									"data",
+									"tokens",
+									"format"
+								],
+								"type": "object"
+							},
+							{
+								"properties": {
+									"error": {
+										"type": "string"
+									},
+									"format": {
+										"type": "string",
+										"enum": [
+											"error"
+										],
+										"nullable": false
+									}
+								},
+								"required": [
+									"error",
+									"format"
+								],
+								"type": "object"
+							}
+						]
+					}
+				]
+			},
+			"Record_string.string_": {
+				"properties": {},
+				"additionalProperties": {
+					"type": "string"
+				},
+				"type": "object",
+				"description": "Construct a type with a set of properties K of type T"
+			},
 			"RoleListItemResponseDto": {
 				"properties": {
 					"members": {
@@ -2058,6 +3046,785 @@
 				]
 			}
 		},
+		"/api/v1/courses/{courseId}/quizzes": {
+			"get": {
+				"operationId": "GetQuizzes",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/QuizListItemResponseDto"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"description": "Get all quizzes for a course.",
+				"tags": [
+					"Quizzes"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "courseId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			},
+			"post": {
+				"operationId": "CreateQuiz",
+				"responses": {
+					"201": {
+						"description": "Created",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/QuizResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"description": "Create a new quiz.",
+				"tags": [
+					"Quizzes"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "courseId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateQuizRequestDto"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/courses/{courseId}/quizzes/{quizId}": {
+			"get": {
+				"operationId": "GetQuiz",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/QuizResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"description": "Get a specific quiz by ID.",
+				"tags": [
+					"Quizzes"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "courseId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "path",
+						"name": "quizId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			},
+			"put": {
+				"operationId": "UpdateQuiz",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/QuizResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"description": "Update a quiz.",
+				"tags": [
+					"Quizzes"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "courseId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "path",
+						"name": "quizId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UpdateQuizRequestDto"
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"operationId": "DeleteQuiz",
+				"responses": {
+					"204": {
+						"description": "No Content"
+					}
+				},
+				"description": "Delete a quiz.",
+				"tags": [
+					"Quizzes"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "courseId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "path",
+						"name": "quizId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/api/v1/courses/{courseId}/quizzes/{quizId}/questions": {
+			"get": {
+				"operationId": "GetQuestions",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/QuestionResponseDto"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"description": "Get all questions for a quiz.",
+				"tags": [
+					"Quizzes"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "courseId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "path",
+						"name": "quizId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			},
+			"post": {
+				"operationId": "AddQuestion",
+				"responses": {
+					"201": {
+						"description": "Created",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/QuestionResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"description": "Add a question to a quiz.",
+				"tags": [
+					"Quizzes"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "courseId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "path",
+						"name": "quizId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateQuestionRequestDto"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/courses/{courseId}/quizzes/{quizId}/questions/{questionId}": {
+			"put": {
+				"operationId": "UpdateQuestion",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/QuestionResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"description": "Update a question.",
+				"tags": [
+					"Quizzes"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "courseId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "path",
+						"name": "quizId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "path",
+						"name": "questionId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UpdateQuestionRequestDto"
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"operationId": "DeleteQuestion",
+				"responses": {
+					"204": {
+						"description": "No Content"
+					}
+				},
+				"description": "Delete a question.",
+				"tags": [
+					"Quizzes"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "courseId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "path",
+						"name": "quizId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "path",
+						"name": "questionId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/api/v1/courses/{courseId}/quizzes/{quizId}/attempts": {
+			"post": {
+				"operationId": "StartAttempt",
+				"responses": {
+					"201": {
+						"description": "Created",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/StartAttemptResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"description": "Start a new quiz attempt.",
+				"tags": [
+					"Quizzes"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "courseId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "path",
+						"name": "quizId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			},
+			"get": {
+				"operationId": "GetAttempts",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/AttemptResponseDto"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"description": "Get all attempts for a quiz (instructors).",
+				"tags": [
+					"Quizzes"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "courseId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "path",
+						"name": "quizId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/api/v1/courses/{courseId}/quizzes/{quizId}/my-attempts": {
+			"get": {
+				"operationId": "GetMyAttempts",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/AttemptDetailResponseDto"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"description": "Get my attempts for a quiz.",
+				"tags": [
+					"Quizzes"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "courseId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "path",
+						"name": "quizId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/api/v1/courses/{courseId}/quizzes/{quizId}/attempts/{attemptId}/answers/{questionId}": {
+			"post": {
+				"operationId": "SubmitAnswer",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"success": {
+											"type": "boolean"
+										}
+									},
+									"required": [
+										"success"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"description": "Submit an answer for a question.",
+				"tags": [
+					"Quizzes"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "courseId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "path",
+						"name": "quizId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "path",
+						"name": "attemptId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "path",
+						"name": "questionId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/SubmitAnswerRequestDto"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/courses/{courseId}/quizzes/{quizId}/attempts/{attemptId}/complete": {
+			"post": {
+				"operationId": "CompleteAttempt",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CompleteAttemptResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"description": "Complete a quiz attempt.",
+				"tags": [
+					"Quizzes"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "courseId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "path",
+						"name": "quizId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "path",
+						"name": "attemptId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/api/v1/courses/{courseId}/quizzes/{quizId}/attempts/{attemptId}/answers/{answerId}/grade": {
+			"post": {
+				"operationId": "GradeAnswer",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"success": {
+											"type": "boolean"
+										}
+									},
+									"required": [
+										"success"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"description": "Grade a short answer question (instructors).",
+				"tags": [
+					"Quizzes"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "courseId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "path",
+						"name": "quizId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "path",
+						"name": "attemptId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "path",
+						"name": "answerId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/GradeAnswerRequestDto"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/courses/{courseId}/quizzes/{quizId}/statistics": {
+			"get": {
+				"operationId": "GetQuizStatistics",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/QuizStatisticsResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"description": "Get quiz statistics (instructors).\nIncludes overall statistics and individual attempt details.",
+				"tags": [
+					"Quizzes"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "courseId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "path",
+						"name": "quizId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
 		"/api/v1/courses/{courseId}/members": {
 			"get": {
 				"operationId": "GetCourseMembers",
@@ -2144,6 +3911,38 @@
 						}
 					}
 				}
+			}
+		},
+		"/api/v1/tasks/download-zip/{jobId}": {
+			"get": {
+				"operationId": "GetDownloadZipJobStatus",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "string",
+									"format": "byte"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Tasks"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "jobId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
 			}
 		},
 		"/api/v1/chapters/by-course": {
@@ -2431,33 +4230,22 @@
 									"properties": {
 										"keys": {
 											"items": {
-												"properties": {
-													"e": {
-														"type": "string"
+												"allOf": [
+													{
+														"$ref": "#/components/schemas/JsonWebKey"
 													},
-													"n": {},
-													"kid": {
-														"type": "string"
-													},
-													"alg": {
-														"type": "string"
-													},
-													"use": {
-														"type": "string"
-													},
-													"kty": {
-														"type": "string"
+													{
+														"properties": {
+															"kid": {
+																"type": "string"
+															}
+														},
+														"required": [
+															"kid"
+														],
+														"type": "object"
 													}
-												},
-												"required": [
-													"e",
-													"n",
-													"kid",
-													"alg",
-													"use",
-													"kty"
-												],
-												"type": "object"
+												]
 											},
 											"type": "array"
 										}
@@ -3278,6 +5066,72 @@
 				]
 			}
 		},
+		"/api/v1/courses/{courseId}/files/download-zip": {
+			"post": {
+				"operationId": "DownloadFilesAsZip",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"href": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"href"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Course Files"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "courseId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"fileIds": {
+										"items": {
+											"type": "number",
+											"format": "double"
+										},
+										"type": "array"
+									}
+								},
+								"required": [
+									"fileIds"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
 		"/api/v1/courses/{courseId}/files/{fileId}/download-url": {
 			"get": {
 				"operationId": "GetFileDownloadUrl",
@@ -3799,6 +5653,153 @@
 						"application/json": {
 							"schema": {
 								"$ref": "#/components/schemas/SendMessageRequestDto"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/signed-request/generate": {
+			"post": {
+				"operationId": "GenerateSignedRequestHash",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				},
+				"description": "Generate a signed request header value for a given path\nand request body.",
+				"tags": [
+					"Debug"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": false,
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "string",
+								"format": "byte"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/signed-request/test-hello-world": {
+			"post": {
+				"operationId": "TestHelloWorldFunction",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				},
+				"description": "Test calling the Hello World Cloud Function from the backend.",
+				"tags": [
+					"Debug"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/signed-request/test-convert-to-markdown": {
+			"post": {
+				"operationId": "TestConvertToMarkdownFunction",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/ConversionResponse"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"description": "Test calling the Convert to Markdown Cloud Function from the backend.",
+				"tags": [
+					"Debug"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"multipart/form-data": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"files": {
+										"items": {
+											"type": "string",
+											"format": "binary"
+										},
+										"type": "array"
+									}
+								},
+								"required": [
+									"files"
+								]
+							}
+						}
+					}
+				}
+			}
+		},
+		"/signed-request/test-create-zip": {
+			"post": {
+				"operationId": "TestCreateZipFunction",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "string",
+									"format": "byte"
+								}
+							}
+						}
+					}
+				},
+				"description": "Test calling the Create Zip Cloud Function from the backend.",
+				"tags": [
+					"Debug"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"downloadLinks": {
+										"$ref": "#/components/schemas/Record_string.string_"
+									}
+								},
+								"required": [
+									"downloadLinks"
+								],
+								"type": "object"
 							}
 						}
 					}
