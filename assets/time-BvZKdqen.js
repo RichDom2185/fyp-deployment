@@ -1,0 +1,1 @@
+const e=e=>[Math.floor(e/36e5),Math.floor(e%36e5/6e4),Math.floor(e%6e4/1e3)],t=e=>{let t=Date.now()-e;return t<6e4?`Just now`:t<36e5?`${Math.floor(t/6e4)}m ago`:t<864e5?`${Math.floor(t/36e5)}h ago`:t<6048e5?`${Math.floor(t/864e5)}d ago`:`${Math.floor(t/6048e5)}w ago`};export{e as n,t};
