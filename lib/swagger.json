@@ -1,0 +1,239 @@
+{
+	"openapi": "3.0.0",
+	"components": {
+		"examples": {},
+		"headers": {},
+		"parameters": {},
+		"requestBodies": {},
+		"responses": {},
+		"schemas": {
+			"Room": {
+				"properties": {
+					"expiredAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"persistent": {
+						"type": "boolean"
+					},
+					"code": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"expiredAt",
+					"persistent",
+					"code"
+				],
+				"type": "object"
+			},
+			"CreateRoomRequestDto": {
+				"properties": {
+					"enableCloudRecording": {
+						"type": "boolean"
+					}
+				},
+				"required": [
+					"enableCloudRecording"
+				],
+				"type": "object"
+			}
+		},
+		"securitySchemes": {}
+	},
+	"info": {
+		"title": "@repo/talk-backend",
+		"version": "0.0.0",
+		"contact": {}
+	},
+	"paths": {
+		"/api/v1/rooms": {
+			"post": {
+				"operationId": "CreateRoom",
+				"responses": {
+					"201": {
+						"description": "Created",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Room"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Rooms"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateRoomRequestDto"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/rooms/{code}/join": {
+			"post": {
+				"operationId": "JoinRoom",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Room"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Rooms"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "code",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/api/v1/rooms/{code}/ttl": {
+			"get": {
+				"operationId": "GetRoomTtl",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"ttl": {
+											"type": "number",
+											"format": "double"
+										},
+										"code": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"ttl",
+										"code"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Rooms"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "code",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/api/v1/rooms/{code}/cooldown": {
+			"get": {
+				"operationId": "GetRoomCooldown",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"cooldown": {
+											"type": "number",
+											"format": "double"
+										},
+										"code": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"cooldown",
+										"code"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Rooms"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "code",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/api/v1/storage/{roomCode}/download": {
+			"get": {
+				"operationId": "DownloadRoomFiles",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/zip": {
+								"schema": {
+									"type": "string",
+									"format": "byte"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Storage"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "roomCode",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		}
+	},
+	"servers": [
+		{
+			"url": "/"
+		}
+	]
+}
