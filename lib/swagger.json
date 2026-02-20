@@ -1974,6 +1974,246 @@
 					}
 				]
 			},
+			"TranscriptionSessionResponseDto": {
+				"properties": {
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"currentRefinementStage": {
+						"type": "string",
+						"nullable": true
+					},
+					"refinedText": {
+						"type": "string",
+						"nullable": true
+					},
+					"rawText": {
+						"type": "string",
+						"nullable": true
+					},
+					"model": {
+						"type": "string",
+						"nullable": true
+					},
+					"duration": {
+						"type": "number",
+						"format": "double",
+						"nullable": true
+					},
+					"overallConfidence": {
+						"type": "number",
+						"format": "double",
+						"nullable": true
+					},
+					"language": {
+						"type": "string",
+						"nullable": true
+					},
+					"title": {
+						"type": "string",
+						"nullable": true
+					},
+					"status": {
+						"type": "string"
+					},
+					"courseId": {
+						"type": "number",
+						"format": "double",
+						"nullable": true
+					},
+					"roomCode": {
+						"type": "string"
+					},
+					"id": {
+						"$ref": "#/components/schemas/Id"
+					}
+				},
+				"required": [
+					"createdAt",
+					"currentRefinementStage",
+					"refinedText",
+					"rawText",
+					"model",
+					"duration",
+					"overallConfidence",
+					"language",
+					"title",
+					"status",
+					"courseId",
+					"roomCode",
+					"id"
+				],
+				"type": "object"
+			},
+			"TranscriptionSegmentResponseDto": {
+				"properties": {
+					"refinementStage": {
+						"type": "string"
+					},
+					"compressionRatio": {
+						"type": "number",
+						"format": "double"
+					},
+					"noSpeechProb": {
+						"type": "number",
+						"format": "double"
+					},
+					"avgLogprob": {
+						"type": "number",
+						"format": "double"
+					},
+					"refinedText": {
+						"type": "string",
+						"nullable": true
+					},
+					"rawText": {
+						"type": "string"
+					},
+					"endTime": {
+						"type": "number",
+						"format": "double"
+					},
+					"startTime": {
+						"type": "number",
+						"format": "double"
+					},
+					"segmentIndex": {
+						"type": "number",
+						"format": "double"
+					},
+					"id": {
+						"$ref": "#/components/schemas/Id"
+					}
+				},
+				"required": [
+					"refinementStage",
+					"compressionRatio",
+					"noSpeechProb",
+					"avgLogprob",
+					"refinedText",
+					"rawText",
+					"endTime",
+					"startTime",
+					"segmentIndex",
+					"id"
+				],
+				"type": "object"
+			},
+			"TranscribedWordResponseDto": {
+				"properties": {
+					"refinementSource": {
+						"type": "string",
+						"nullable": true
+					},
+					"wasRefined": {
+						"type": "boolean"
+					},
+					"probability": {
+						"type": "number",
+						"format": "double"
+					},
+					"endTime": {
+						"type": "number",
+						"format": "double"
+					},
+					"startTime": {
+						"type": "number",
+						"format": "double"
+					},
+					"refinedWord": {
+						"type": "string",
+						"nullable": true
+					},
+					"word": {
+						"type": "string"
+					},
+					"wordIndex": {
+						"type": "number",
+						"format": "double"
+					},
+					"id": {
+						"$ref": "#/components/schemas/Id"
+					}
+				},
+				"required": [
+					"refinementSource",
+					"wasRefined",
+					"probability",
+					"endTime",
+					"startTime",
+					"refinedWord",
+					"word",
+					"wordIndex",
+					"id"
+				],
+				"type": "object"
+			},
+			"FullTranscriptionSessionResponseDto": {
+				"allOf": [
+					{
+						"$ref": "#/components/schemas/TranscriptionSessionResponseDto"
+					},
+					{
+						"properties": {
+							"segments": {
+								"items": {
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/TranscriptionSegmentResponseDto"
+										},
+										{
+											"properties": {
+												"words": {
+													"items": {
+														"$ref": "#/components/schemas/TranscribedWordResponseDto"
+													},
+													"type": "array"
+												}
+											},
+											"required": [
+												"words"
+											],
+											"type": "object"
+										}
+									]
+								},
+								"type": "array"
+							}
+						},
+						"required": [
+							"segments"
+						],
+						"type": "object"
+					}
+				],
+				"description": "Full transcription session response with nested segments and words.\nUsed by the /full endpoint for detailed session view."
+			},
+			"ManuallyCorrectSegmentRequestDto": {
+				"properties": {
+					"correctedText": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"correctedText"
+				],
+				"type": "object"
+			},
+			"ManuallyCorrectWordRequestDto": {
+				"properties": {
+					"reason": {
+						"type": "string"
+					},
+					"correctedWord": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"correctedWord"
+				],
+				"type": "object"
+			},
 			"CreateUserResponseDto": {
 				"properties": {
 					"updatedAt": {
@@ -2026,6 +2266,13 @@
 					"fullName"
 				],
 				"type": "object"
+			},
+			"ProviderName": {
+				"type": "string",
+				"enum": [
+					"openai",
+					"anthropic"
+				]
 			},
 			"CourseFileResponseDto": {
 				"properties": {
@@ -2094,8 +2341,248 @@
 				],
 				"type": "object"
 			},
+			"DictionaryResponseDto": {
+				"properties": {
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"isEnabled": {
+						"type": "boolean"
+					},
+					"courseId": {
+						"type": "number",
+						"format": "double",
+						"nullable": true
+					},
+					"scope": {
+						"type": "string"
+					},
+					"language": {
+						"type": "string"
+					},
+					"type": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string",
+						"nullable": true
+					},
+					"name": {
+						"type": "string"
+					},
+					"id": {
+						"$ref": "#/components/schemas/Id"
+					}
+				},
+				"required": [
+					"createdAt",
+					"isEnabled",
+					"courseId",
+					"scope",
+					"language",
+					"type",
+					"description",
+					"name",
+					"id"
+				],
+				"type": "object"
+			},
+			"CreateDictionaryRequestDto": {
+				"properties": {
+					"courseId": {
+						"type": "number",
+						"format": "double"
+					},
+					"scope": {
+						"type": "string",
+						"enum": [
+							"global",
+							"course"
+						]
+					},
+					"language": {
+						"type": "string"
+					},
+					"type": {
+						"type": "string",
+						"enum": [
+							"dialect",
+							"domain",
+							"custom"
+						]
+					},
+					"description": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"scope",
+					"type",
+					"name"
+				],
+				"type": "object"
+			},
+			"UpdateDictionaryRequestDto": {
+				"properties": {
+					"isEnabled": {
+						"type": "boolean"
+					},
+					"scope": {
+						"type": "string",
+						"enum": [
+							"global",
+							"course"
+						]
+					},
+					"language": {
+						"type": "string"
+					},
+					"type": {
+						"type": "string",
+						"enum": [
+							"dialect",
+							"domain",
+							"custom"
+						]
+					},
+					"description": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"isEnabled",
+					"scope",
+					"language",
+					"type",
+					"name"
+				],
+				"type": "object"
+			},
+			"DictionaryEntryResponseDto": {
+				"properties": {
+					"matchThreshold": {
+						"type": "number",
+						"format": "double"
+					},
+					"aliases": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array",
+						"nullable": true
+					},
+					"contextExamples": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array",
+						"nullable": true
+					},
+					"definition": {
+						"type": "string",
+						"nullable": true
+					},
+					"phonemes": {
+						"type": "string",
+						"nullable": true
+					},
+					"standardForm": {
+						"type": "string"
+					},
+					"term": {
+						"type": "string"
+					},
+					"id": {
+						"$ref": "#/components/schemas/Id"
+					}
+				},
+				"required": [
+					"matchThreshold",
+					"aliases",
+					"contextExamples",
+					"definition",
+					"phonemes",
+					"standardForm",
+					"term",
+					"id"
+				],
+				"type": "object"
+			},
+			"AddDictionaryEntryRequestDto": {
+				"properties": {
+					"matchThreshold": {
+						"type": "number",
+						"format": "double"
+					},
+					"aliases": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					},
+					"contextExamples": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					},
+					"definition": {
+						"type": "string"
+					},
+					"phonemes": {
+						"type": "string"
+					},
+					"standardForm": {
+						"type": "string"
+					},
+					"term": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"standardForm",
+					"term"
+				],
+				"type": "object"
+			},
+			"BulkAddDictionaryEntriesRequestDto": {
+				"properties": {
+					"entries": {
+						"items": {
+							"$ref": "#/components/schemas/AddDictionaryEntryRequestDto"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"entries"
+				],
+				"type": "object"
+			},
 			"CalendarResponseDto": {
 				"properties": {
+					"permission": {
+						"type": "string",
+						"enum": [
+							"view",
+							"edit"
+						]
+					},
+					"accessType": {
+						"type": "string",
+						"enum": [
+							"owner",
+							"course",
+							"shared"
+						]
+					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time"
@@ -2163,6 +2650,124 @@
 				},
 				"required": [
 					"name"
+				],
+				"type": "object"
+			},
+			"UpdateCalendarRequestDto": {
+				"properties": {
+					"isShared": {
+						"type": "boolean"
+					},
+					"description": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					}
+				},
+				"type": "object"
+			},
+			"CalendarShareResponseDto": {
+				"properties": {
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"sharedByUserName": {
+						"type": "string"
+					},
+					"sharedByUserId": {
+						"$ref": "#/components/schemas/Id"
+					},
+					"permission": {
+						"type": "string",
+						"enum": [
+							"view",
+							"edit"
+						]
+					},
+					"sharedWithCourseName": {
+						"type": "string",
+						"nullable": true
+					},
+					"sharedWithCourseId": {
+						"allOf": [
+							{
+								"$ref": "#/components/schemas/Id"
+							}
+						],
+						"nullable": true
+					},
+					"sharedWithUserName": {
+						"type": "string",
+						"nullable": true
+					},
+					"sharedWithUserId": {
+						"allOf": [
+							{
+								"$ref": "#/components/schemas/Id"
+							}
+						],
+						"nullable": true
+					},
+					"shareType": {
+						"type": "string",
+						"enum": [
+							"user",
+							"course"
+						]
+					},
+					"calendarId": {
+						"$ref": "#/components/schemas/Id"
+					},
+					"id": {
+						"$ref": "#/components/schemas/Id"
+					}
+				},
+				"required": [
+					"updatedAt",
+					"createdAt",
+					"sharedByUserName",
+					"sharedByUserId",
+					"permission",
+					"sharedWithCourseName",
+					"sharedWithCourseId",
+					"sharedWithUserName",
+					"sharedWithUserId",
+					"shareType",
+					"calendarId",
+					"id"
+				],
+				"type": "object"
+			},
+			"ShareCalendarRequestDto": {
+				"properties": {
+					"permission": {
+						"type": "string",
+						"enum": [
+							"view",
+							"edit"
+						]
+					},
+					"targetId": {
+						"$ref": "#/components/schemas/Id"
+					},
+					"shareType": {
+						"type": "string",
+						"enum": [
+							"user",
+							"course"
+						]
+					}
+				},
+				"required": [
+					"permission",
+					"targetId",
+					"shareType"
 				],
 				"type": "object"
 			},
@@ -2310,11 +2915,76 @@
 				},
 				"type": "object"
 			},
+			"ToolCallData": {
+				"properties": {
+					"requiresPermission": {
+						"type": "boolean"
+					},
+					"parameters": {
+						"$ref": "#/components/schemas/Record_string.any_"
+					},
+					"toolName": {
+						"type": "string"
+					},
+					"toolId": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"requiresPermission",
+					"parameters",
+					"toolName",
+					"toolId"
+				],
+				"type": "object"
+			},
+			"ToolResultData": {
+				"properties": {
+					"error": {
+						"type": "string"
+					},
+					"result": {},
+					"success": {
+						"type": "boolean"
+					},
+					"toolName": {
+						"type": "string"
+					},
+					"toolId": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"result",
+					"success",
+					"toolName",
+					"toolId"
+				],
+				"type": "object"
+			},
 			"MessageResponseDto": {
 				"properties": {
 					"createdAt": {
 						"type": "string",
 						"format": "date-time"
+					},
+					"toolResult": {
+						"allOf": [
+							{
+								"$ref": "#/components/schemas/ToolResultData"
+							}
+						],
+						"nullable": true
+					},
+					"toolCall": {
+						"allOf": [
+							{
+								"$ref": "#/components/schemas/ToolCallData"
+							}
+						],
+						"nullable": true
 					},
 					"content": {
 						"type": "string"
@@ -2382,6 +3052,47 @@
 				},
 				"required": [
 					"content"
+				],
+				"type": "object"
+			},
+			"ExecuteToolResponseDto": {
+				"properties": {
+					"updatedMessage": {
+						"$ref": "#/components/schemas/MessageResponseDto"
+					},
+					"error": {
+						"type": "string"
+					},
+					"result": {},
+					"success": {
+						"type": "boolean"
+					}
+				},
+				"required": [
+					"updatedMessage",
+					"result",
+					"success"
+				],
+				"type": "object"
+			},
+			"ExecuteToolRequestDto": {
+				"properties": {
+					"permissionScope": {
+						"type": "string",
+						"enum": [
+							"once",
+							"conversation",
+							"always"
+						]
+					},
+					"messageId": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"permissionScope",
+					"messageId"
 				],
 				"type": "object"
 			},
@@ -2582,6 +3293,515 @@
 				],
 				"type": "object"
 			},
+			"ToolPermissionResponseDto": {
+				"properties": {
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"lastUsedAt": {
+						"type": "string",
+						"format": "date-time",
+						"nullable": true
+					},
+					"usageCount": {
+						"type": "number",
+						"format": "double"
+					},
+					"conversationId": {
+						"type": "number",
+						"format": "double",
+						"nullable": true
+					},
+					"scope": {
+						"type": "string",
+						"enum": [
+							"always",
+							"conversation",
+							"once"
+						]
+					},
+					"toolDisplayName": {
+						"type": "string"
+					},
+					"toolName": {
+						"type": "string"
+					},
+					"toolId": {
+						"type": "number",
+						"format": "double"
+					},
+					"id": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"createdAt",
+					"lastUsedAt",
+					"usageCount",
+					"conversationId",
+					"scope",
+					"toolDisplayName",
+					"toolName",
+					"toolId",
+					"id"
+				],
+				"type": "object"
+			},
+			"PermissionStatsResponseDto": {
+				"properties": {
+					"mostUsedTools": {
+						"items": {
+							"properties": {
+								"usageCount": {
+									"type": "number",
+									"format": "double"
+								},
+								"toolName": {
+									"type": "string"
+								},
+								"toolId": {
+									"type": "number",
+									"format": "double"
+								}
+							},
+							"required": [
+								"usageCount",
+								"toolName",
+								"toolId"
+							],
+							"type": "object"
+						},
+						"type": "array"
+					},
+					"totalUsage": {
+						"type": "number",
+						"format": "double"
+					},
+					"conversationPermissions": {
+						"type": "number",
+						"format": "double"
+					},
+					"alwaysPermissions": {
+						"type": "number",
+						"format": "double"
+					},
+					"totalPermissions": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"mostUsedTools",
+					"totalUsage",
+					"conversationPermissions",
+					"alwaysPermissions",
+					"totalPermissions"
+				],
+				"type": "object"
+			},
+			"GrantPermissionRequestDto": {
+				"properties": {
+					"conversationId": {
+						"type": "number",
+						"format": "double"
+					},
+					"scope": {
+						"type": "string",
+						"enum": [
+							"always",
+							"conversation",
+							"once"
+						]
+					},
+					"toolId": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"scope",
+					"toolId"
+				],
+				"type": "object"
+			},
+			"PipelineResponseDto": {
+				"properties": {
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"isEnabled": {
+						"type": "boolean"
+					},
+					"isDefault": {
+						"type": "boolean"
+					},
+					"description": {
+						"type": "string",
+						"nullable": true
+					},
+					"name": {
+						"type": "string"
+					},
+					"id": {
+						"$ref": "#/components/schemas/Id"
+					}
+				},
+				"required": [
+					"createdAt",
+					"isEnabled",
+					"isDefault",
+					"description",
+					"name",
+					"id"
+				],
+				"type": "object"
+			},
+			"ContextRetrievalConfig": {
+				"properties": {
+					"sources": {
+						"items": {
+							"type": "string",
+							"enum": [
+								"course_files",
+								"modules",
+								"discussions",
+								"quizzes"
+							]
+						},
+						"type": "array"
+					},
+					"similarityThreshold": {
+						"type": "number",
+						"format": "double"
+					},
+					"topK": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"sources",
+					"similarityThreshold",
+					"topK"
+				],
+				"type": "object",
+				"description": "Configuration for context_retrieval stages."
+			},
+			"DictionaryLookupConfig": {
+				"properties": {
+					"useFuzzyMatching": {
+						"type": "boolean",
+						"description": "Whether to use fuzzy/phoneme matching."
+					},
+					"matchThreshold": {
+						"type": "number",
+						"format": "double",
+						"description": "Minimum match confidence to include a candidate."
+					},
+					"dictionaryIds": {
+						"items": {
+							"type": "number",
+							"format": "double"
+						},
+						"type": "array",
+						"description": "IDs of dictionaries to apply (order matters)."
+					}
+				},
+				"required": [
+					"useFuzzyMatching",
+					"matchThreshold",
+					"dictionaryIds"
+				],
+				"type": "object",
+				"description": "Configuration for dictionary_lookup stages."
+			},
+			"LLMRefinementConfig": {
+				"properties": {
+					"maxTokens": {
+						"type": "number",
+						"format": "double"
+					},
+					"temperature": {
+						"type": "number",
+						"format": "double"
+					},
+					"promptTemplate": {
+						"type": "string",
+						"description": "Prompt template with mustache-style variables:\n{{transcript}}, {{context}}, {{dictionary_matches}}, {{language}}"
+					},
+					"baseUrl": {
+						"type": "string"
+					},
+					"apiKey": {
+						"type": "string"
+					},
+					"model": {
+						"type": "string"
+					},
+					"provider": {
+						"type": "string",
+						"description": "AI provider: \"openai\" | \"anthropic\" | \"google\" | \"custom\""
+					}
+				},
+				"required": [
+					"maxTokens",
+					"temperature",
+					"promptTemplate",
+					"model",
+					"provider"
+				],
+				"type": "object",
+				"description": "Configuration for llm_refinement stages."
+			},
+			"CustomStageConfig": {
+				"properties": {
+					"timeoutMs": {
+						"type": "number",
+						"format": "double"
+					},
+					"headers": {
+						"$ref": "#/components/schemas/Record_string.string_"
+					},
+					"webhookUrl": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"timeoutMs",
+					"headers",
+					"webhookUrl"
+				],
+				"type": "object",
+				"description": "Configuration for custom (webhook) stages."
+			},
+			"StageConfig": {
+				"anyOf": [
+					{
+						"$ref": "#/components/schemas/ContextRetrievalConfig"
+					},
+					{
+						"$ref": "#/components/schemas/DictionaryLookupConfig"
+					},
+					{
+						"$ref": "#/components/schemas/LLMRefinementConfig"
+					},
+					{
+						"$ref": "#/components/schemas/CustomStageConfig"
+					}
+				]
+			},
+			"PipelineStageResponseDto": {
+				"properties": {
+					"isEnabled": {
+						"type": "boolean"
+					},
+					"config": {
+						"$ref": "#/components/schemas/StageConfig"
+					},
+					"order": {
+						"type": "number",
+						"format": "double"
+					},
+					"type": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					},
+					"pipelineId": {
+						"type": "number",
+						"format": "double"
+					},
+					"id": {
+						"$ref": "#/components/schemas/Id"
+					}
+				},
+				"required": [
+					"isEnabled",
+					"config",
+					"order",
+					"type",
+					"name",
+					"pipelineId",
+					"id"
+				],
+				"type": "object"
+			},
+			"DetailedPipelineResponseDto": {
+				"allOf": [
+					{
+						"$ref": "#/components/schemas/PipelineResponseDto"
+					},
+					{
+						"properties": {
+							"stages": {
+								"items": {
+									"$ref": "#/components/schemas/PipelineStageResponseDto"
+								},
+								"type": "array"
+							}
+						},
+						"required": [
+							"stages"
+						],
+						"type": "object"
+					}
+				]
+			},
+			"CreatePipelineRequestDto": {
+				"properties": {
+					"isDefault": {
+						"type": "boolean"
+					},
+					"description": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"name"
+				],
+				"type": "object"
+			},
+			"UpdatePipelineRequestDto": {
+				"properties": {
+					"isEnabled": {
+						"type": "boolean"
+					},
+					"isDefault": {
+						"type": "boolean"
+					},
+					"description": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					}
+				},
+				"type": "object"
+			},
+			"CreatePipelineStageRequestDto": {
+				"properties": {
+					"isEnabled": {
+						"type": "boolean"
+					},
+					"config": {
+						"$ref": "#/components/schemas/StageConfig"
+					},
+					"order": {
+						"type": "number",
+						"format": "double"
+					},
+					"type": {
+						"type": "string",
+						"enum": [
+							"context_retrieval",
+							"dictionary_lookup",
+							"llm_refinement",
+							"custom"
+						]
+					},
+					"name": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"config",
+					"order",
+					"type",
+					"name"
+				],
+				"type": "object"
+			},
+			"UpdatePipelineStageRequestDto": {
+				"properties": {
+					"isEnabled": {
+						"type": "boolean"
+					},
+					"config": {
+						"$ref": "#/components/schemas/StageConfig"
+					},
+					"order": {
+						"type": "number",
+						"format": "double"
+					},
+					"name": {
+						"type": "string"
+					}
+				},
+				"type": "object"
+			},
+			"PipelineAssignmentResponseDto": {
+				"properties": {
+					"pipelineId": {
+						"type": "number",
+						"format": "double"
+					},
+					"courseId": {
+						"type": "number",
+						"format": "double"
+					},
+					"id": {
+						"$ref": "#/components/schemas/Id"
+					}
+				},
+				"required": [
+					"pipelineId",
+					"courseId",
+					"id"
+				],
+				"type": "object"
+			},
+			"AssignPipelineRequestDto": {
+				"properties": {
+					"pipelineId": {
+						"type": "number",
+						"format": "double"
+					},
+					"courseId": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"pipelineId",
+					"courseId"
+				],
+				"type": "object"
+			},
+			"IndexContentResponseDto": {
+				"properties": {
+					"chunksCreated": {
+						"type": "number",
+						"format": "double",
+						"description": "Number of chunks created during indexing."
+					},
+					"message": {
+						"type": "string",
+						"description": "Human-readable status message."
+					}
+				},
+				"required": [
+					"chunksCreated",
+					"message"
+				],
+				"type": "object",
+				"description": "Response DTO for content indexing operations."
+			},
+			"IndexCourseResponseDto": {
+				"$ref": "#/components/schemas/IndexContentResponseDto"
+			},
+			"IndexCourseFileResponseDto": {
+				"$ref": "#/components/schemas/IndexContentResponseDto"
+			},
+			"IndexModuleResponseDto": {
+				"$ref": "#/components/schemas/IndexContentResponseDto"
+			},
 			"SignupResponseDto": {
 				"properties": {
 					"email": {
@@ -2674,6 +3894,158 @@
 					"redirectUri",
 					"code",
 					"provider"
+				],
+				"type": "object"
+			},
+			"TranscriptionWordRequestDto": {
+				"properties": {
+					"probability": {
+						"type": "number",
+						"format": "double"
+					},
+					"end": {
+						"type": "number",
+						"format": "double"
+					},
+					"start": {
+						"type": "number",
+						"format": "double"
+					},
+					"word": {
+						"type": "string"
+					},
+					"id": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"probability",
+					"end",
+					"start",
+					"word",
+					"id"
+				],
+				"type": "object"
+			},
+			"TranscriptionSegmentRequestDto": {
+				"properties": {
+					"words": {
+						"items": {
+							"$ref": "#/components/schemas/TranscriptionWordRequestDto"
+						},
+						"type": "array"
+					},
+					"compressionRatio": {
+						"type": "number",
+						"format": "double"
+					},
+					"noSpeechProb": {
+						"type": "number",
+						"format": "double"
+					},
+					"avgLogprob": {
+						"type": "number",
+						"format": "double"
+					},
+					"text": {
+						"type": "string"
+					},
+					"end": {
+						"type": "number",
+						"format": "double"
+					},
+					"start": {
+						"type": "number",
+						"format": "double"
+					},
+					"id": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"words",
+					"compressionRatio",
+					"noSpeechProb",
+					"avgLogprob",
+					"text",
+					"end",
+					"start",
+					"id"
+				],
+				"type": "object"
+			},
+			"RichTranscriptionRequestDto": {
+				"properties": {
+					"overallConfidence": {
+						"type": "number",
+						"format": "double"
+					},
+					"processingTimeMs": {
+						"type": "number",
+						"format": "double"
+					},
+					"duration": {
+						"type": "number",
+						"format": "double"
+					},
+					"model": {
+						"type": "string"
+					},
+					"segments": {
+						"items": {
+							"$ref": "#/components/schemas/TranscriptionSegmentRequestDto"
+						},
+						"type": "array"
+					},
+					"text": {
+						"type": "string"
+					},
+					"languageConfidence": {
+						"type": "number",
+						"format": "double"
+					},
+					"language": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"overallConfidence",
+					"processingTimeMs",
+					"duration",
+					"model",
+					"segments",
+					"text",
+					"languageConfidence",
+					"language"
+				],
+				"type": "object"
+			},
+			"TranscriptionWebhookRequestDto": {
+				"properties": {
+					"transcription": {
+						"$ref": "#/components/schemas/RichTranscriptionRequestDto",
+						"description": "The full rich transcription from the ASR worker."
+					},
+					"createdById": {
+						"type": "number",
+						"format": "double",
+						"description": "User ID who created the room (from JWT claims)."
+					},
+					"courseId": {
+						"type": "number",
+						"format": "double",
+						"description": "Course ID if the room was course-linked."
+					},
+					"roomCode": {
+						"type": "string",
+						"description": "The talk-backend room code."
+					}
+				},
+				"required": [
+					"transcription",
+					"roomCode"
 				],
 				"type": "object"
 			}
@@ -4855,6 +6227,303 @@
 				}
 			}
 		},
+		"/api/v1/transcriptions/by-course": {
+			"get": {
+				"operationId": "GetSessionsByCourse",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/TranscriptionSessionResponseDto"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"description": "List transcription sessions for a course, newest first.",
+				"tags": [
+					"Transcription"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "courseId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/api/v1/transcriptions/{sessionId}": {
+			"get": {
+				"operationId": "GetSession",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/TranscriptionSessionResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"description": "Get a single transcription session.",
+				"tags": [
+					"Transcription"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "sessionId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/api/v1/transcriptions/{sessionId}/segments": {
+			"get": {
+				"operationId": "GetSegments",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/TranscriptionSegmentResponseDto"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"description": "Get all segments for a transcription session, ordered by time.",
+				"tags": [
+					"Transcription"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "sessionId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/api/v1/transcriptions/{sessionId}/segments/{segmentId}/words": {
+			"get": {
+				"operationId": "GetWords",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/TranscribedWordResponseDto"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"description": "Get all words for a specific segment.",
+				"tags": [
+					"Transcription"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "sessionId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "path",
+						"name": "segmentId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/api/v1/transcriptions/{sessionId}/full": {
+			"get": {
+				"operationId": "GetFullSession",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/FullTranscriptionSessionResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"description": "Get a full session with all segments and words (detailed view).",
+				"tags": [
+					"Transcription"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "sessionId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/api/v1/transcriptions/segments/{segmentId}": {
+			"patch": {
+				"operationId": "CorrectSegment",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/TranscriptionSegmentResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"description": "Manually correct a segment's text.",
+				"tags": [
+					"Transcription"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "segmentId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ManuallyCorrectSegmentRequestDto"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/transcriptions/words/{wordId}": {
+			"patch": {
+				"operationId": "CorrectWord",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/TranscribedWordResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"description": "Manually correct a single word.",
+				"tags": [
+					"Transcription"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "wordId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ManuallyCorrectWordRequestDto"
+							}
+						}
+					}
+				}
+			}
+		},
 		"/api/v1/users": {
 			"post": {
 				"operationId": "CreateUser",
@@ -4885,6 +6554,54 @@
 						}
 					}
 				}
+			}
+		},
+		"/count/global": {
+			"get": {
+				"operationId": "GetGlobalCount",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "number",
+									"format": "double"
+								}
+							}
+						}
+					}
+				},
+				"description": "Gets and increments a global count shared across all requests.",
+				"tags": [
+					"Debug"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/count/scoped": {
+			"get": {
+				"operationId": "GetScopedCount",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "number",
+									"format": "double"
+								}
+							}
+						}
+					}
+				},
+				"description": "Gets and increments a request-scoped count, unique per request.\nIn practice, this will always return 1 since each request gets\na new instance.",
+				"tags": [
+					"Debug"
+				],
+				"security": [],
+				"parameters": []
 			}
 		},
 		"/streams/lorem-ipsum": {
@@ -4932,7 +6649,16 @@
 					"Debug"
 				],
 				"security": [],
-				"parameters": []
+				"parameters": [
+					{
+						"in": "query",
+						"name": "provider",
+						"required": false,
+						"schema": {
+							"$ref": "#/components/schemas/ProviderName"
+						}
+					}
+				]
 			}
 		},
 		"/streams/raw-ai-response": {
@@ -4956,7 +6682,16 @@
 					"Debug"
 				],
 				"security": [],
-				"parameters": []
+				"parameters": [
+					{
+						"in": "query",
+						"name": "provider",
+						"required": false,
+						"schema": {
+							"$ref": "#/components/schemas/ProviderName"
+						}
+					}
+				]
 			}
 		},
 		"/api/v1/courses/{courseId}/files/upload": {
@@ -5217,6 +6952,362 @@
 				]
 			}
 		},
+		"/api/v1/dictionaries": {
+			"get": {
+				"operationId": "ListDictionaries",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/DictionaryResponseDto"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"description": "List all dictionaries, optionally filtered by course\n(returns global + course-specific).",
+				"tags": [
+					"Dictionary"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "courseId",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			},
+			"post": {
+				"operationId": "CreateDictionary",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DictionaryResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"description": "Create a new dictionary.",
+				"tags": [
+					"Dictionary"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateDictionaryRequestDto"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/dictionaries/{dictionaryId}": {
+			"get": {
+				"operationId": "GetDictionary",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DictionaryResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"description": "Get a single dictionary by ID.",
+				"tags": [
+					"Dictionary"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "dictionaryId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			},
+			"put": {
+				"operationId": "UpdateDictionary",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DictionaryResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"description": "Update an existing dictionary.",
+				"tags": [
+					"Dictionary"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "dictionaryId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UpdateDictionaryRequestDto"
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"operationId": "DeleteDictionary",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"description": "Delete a dictionary and all its entries.",
+				"tags": [
+					"Dictionary"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "dictionaryId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/api/v1/dictionaries/{dictionaryId}/entries": {
+			"get": {
+				"operationId": "ListEntries",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/DictionaryEntryResponseDto"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"description": "List all entries in a dictionary.",
+				"tags": [
+					"Dictionary"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "dictionaryId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			},
+			"post": {
+				"operationId": "AddEntry",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DictionaryEntryResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"description": "Add a single entry to a dictionary.",
+				"tags": [
+					"Dictionary"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "dictionaryId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/AddDictionaryEntryRequestDto"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/dictionaries/{dictionaryId}/entries/bulk": {
+			"post": {
+				"operationId": "BulkAddEntries",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"count": {
+											"type": "number",
+											"format": "double"
+										}
+									},
+									"required": [
+										"count"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"description": "Bulk-add entries to a dictionary (e.g. from CSV/JSON import).",
+				"tags": [
+					"Dictionary"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "dictionaryId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/BulkAddDictionaryEntriesRequestDto"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/dictionaries/entries/{entryId}": {
+			"delete": {
+				"operationId": "DeleteEntry",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"description": "Delete a single dictionary entry.",
+				"tags": [
+					"Dictionary"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "entryId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
 		"/storage/list": {
 			"get": {
 				"operationId": "ListFiles",
@@ -5386,6 +7477,234 @@
 						}
 					}
 				}
+			}
+		},
+		"/api/v1/calendars/{calendarId}": {
+			"get": {
+				"operationId": "GetCalendar",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CalendarResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Calendars"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "calendarId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			},
+			"put": {
+				"operationId": "UpdateCalendar",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CalendarResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Calendars"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "calendarId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UpdateCalendarRequestDto"
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"operationId": "DeleteCalendar",
+				"responses": {
+					"204": {
+						"description": "No Content"
+					}
+				},
+				"tags": [
+					"Calendars"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "calendarId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/api/v1/calendars/{calendarId}/shares": {
+			"get": {
+				"operationId": "GetCalendarShares",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/CalendarShareResponseDto"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Calendars"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "calendarId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			},
+			"post": {
+				"operationId": "ShareCalendar",
+				"responses": {
+					"201": {
+						"description": "Created",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CalendarShareResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Calendars"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "calendarId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ShareCalendarRequestDto"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/calendars/{calendarId}/shares/{shareId}": {
+			"delete": {
+				"operationId": "RemoveCalendarShare",
+				"responses": {
+					"204": {
+						"description": "No Content"
+					}
+				},
+				"tags": [
+					"Calendars"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "calendarId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "path",
+						"name": "shareId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
 			}
 		},
 		"/api/v1/calendars/{calendarId}/events": {
@@ -5659,6 +7978,62 @@
 				}
 			}
 		},
+		"/api/v1/conversations/{conversationId}/messages/{messageId}/execute-tool": {
+			"post": {
+				"operationId": "ExecuteTool",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ExecuteToolResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"description": "Execute a tool call from a message (after user grants permission)",
+				"tags": [
+					"Messages"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "conversationId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "path",
+						"name": "messageId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ExecuteToolRequestDto"
+							}
+						}
+					}
+				}
+			}
+		},
 		"/signed-request/generate": {
 			"post": {
 				"operationId": "GenerateSignedRequestHash",
@@ -5800,6 +8175,49 @@
 									"downloadLinks"
 								],
 								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/signed-request/test-extract-thumbnails": {
+			"post": {
+				"operationId": "TestExtractThumbnailsFunction",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"text/plain": {
+								"schema": {}
+							}
+						}
+					}
+				},
+				"description": "Test calling the Extract Thumbnails Cloud Function from the backend.",
+				"tags": [
+					"Debug"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"multipart/form-data": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"files": {
+										"items": {
+											"type": "string",
+											"format": "binary"
+										},
+										"type": "array"
+									}
+								},
+								"required": [
+									"files"
+								]
 							}
 						}
 					}
@@ -6075,6 +8493,794 @@
 				]
 			}
 		},
+		"/api/v1/tool-permissions": {
+			"get": {
+				"operationId": "GetPermissions",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/ToolPermissionResponseDto"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"description": "Get all tool permissions for the current user.",
+				"tags": [
+					"Tool Permissions"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "conversationId",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			},
+			"post": {
+				"operationId": "GrantPermission",
+				"responses": {
+					"201": {
+						"description": "Created",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"message": {
+											"type": "string"
+										},
+										"success": {
+											"type": "boolean"
+										}
+									},
+									"required": [
+										"message",
+										"success"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"description": "Grant permission for a tool.",
+				"tags": [
+					"Tool Permissions"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/GrantPermissionRequestDto"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/tool-permissions/stats": {
+			"get": {
+				"operationId": "GetStats",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/PermissionStatsResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"description": "Get permission statistics for the current user.",
+				"tags": [
+					"Tool Permissions"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": []
+			}
+		},
+		"/api/v1/tool-permissions/{toolId}": {
+			"delete": {
+				"operationId": "RevokePermission",
+				"responses": {
+					"204": {
+						"description": "No Content"
+					}
+				},
+				"description": "Revoke permission for a tool.",
+				"tags": [
+					"Tool Permissions"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "toolId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "scope",
+						"required": false,
+						"schema": {
+							"type": "string",
+							"enum": [
+								"always",
+								"conversation",
+								"once"
+							]
+						}
+					},
+					{
+						"in": "query",
+						"name": "conversationId",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/api/v1/tool-permissions/check": {
+			"get": {
+				"operationId": "CheckPermission",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"scope": {
+											"type": "string",
+											"enum": [
+												"always",
+												"conversation",
+												"once",
+												null
+											],
+											"nullable": true
+										},
+										"hasPermission": {
+											"type": "boolean"
+										}
+									},
+									"required": [
+										"scope",
+										"hasPermission"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"description": "Check if user has permission for a tool.",
+				"tags": [
+					"Tool Permissions"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "toolId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "conversationId",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/api/v1/pipelines": {
+			"get": {
+				"operationId": "ListPipelines",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/PipelineResponseDto"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Pipeline"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": []
+			},
+			"post": {
+				"operationId": "CreatePipeline",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/PipelineResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Pipeline"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreatePipelineRequestDto"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/pipelines/{pipelineId}": {
+			"get": {
+				"operationId": "GetPipeline",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DetailedPipelineResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Pipeline"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "pipelineId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			},
+			"patch": {
+				"operationId": "UpdatePipeline",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/PipelineResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Pipeline"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "pipelineId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UpdatePipelineRequestDto"
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"operationId": "DeletePipeline",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"tags": [
+					"Pipeline"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "pipelineId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/api/v1/pipelines/{pipelineId}/stages": {
+			"get": {
+				"operationId": "ListStages",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/PipelineStageResponseDto"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Pipeline"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "pipelineId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			},
+			"post": {
+				"operationId": "CreateStage",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/PipelineStageResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Pipeline"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "pipelineId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreatePipelineStageRequestDto"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/pipelines/stages/{stageId}": {
+			"patch": {
+				"operationId": "UpdateStage",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/PipelineStageResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Pipeline"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "stageId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UpdatePipelineStageRequestDto"
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"operationId": "DeleteStage",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"tags": [
+					"Pipeline"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "stageId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/api/v1/pipelines/assignments": {
+			"get": {
+				"operationId": "ListAssignments",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/PipelineAssignmentResponseDto"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Pipeline"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "courseId",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			},
+			"post": {
+				"operationId": "AssignPipeline",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/PipelineAssignmentResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Pipeline"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/AssignPipelineRequestDto"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/pipelines/assignments/{assignmentId}": {
+			"delete": {
+				"operationId": "RemoveAssignment",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"tags": [
+					"Pipeline"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "assignmentId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/api/v1/content-index/courses/{courseId}": {
+			"post": {
+				"operationId": "IndexCourse",
+				"responses": {
+					"200": {
+						"description": "Response containing the number of chunks created",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IndexCourseResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"description": "Index all content for a course (files + modules).\nReplaces any existing chunks for re-indexed sources.",
+				"tags": [
+					"Content Indexing"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"description": "- The course ID to index content for",
+						"in": "path",
+						"name": "courseId",
+						"required": true,
+						"schema": {
+							"$ref": "#/components/schemas/Id"
+						}
+					}
+				]
+			}
+		},
+		"/api/v1/content-index/courses/{courseId}/files/{fileId}": {
+			"post": {
+				"operationId": "IndexCourseFile",
+				"responses": {
+					"200": {
+						"description": "Response containing the number of chunks created",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IndexCourseFileResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"description": "Index a single course file.\nRequires the file to have completed markdown conversion.",
+				"tags": [
+					"Content Indexing"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"description": "- The course ID",
+						"in": "path",
+						"name": "courseId",
+						"required": true,
+						"schema": {
+							"$ref": "#/components/schemas/Id"
+						}
+					},
+					{
+						"description": "- The file ID to index",
+						"in": "path",
+						"name": "fileId",
+						"required": true,
+						"schema": {
+							"$ref": "#/components/schemas/Id"
+						}
+					}
+				]
+			}
+		},
+		"/api/v1/content-index/courses/{courseId}/modules/{moduleId}": {
+			"post": {
+				"operationId": "IndexModule",
+				"responses": {
+					"200": {
+						"description": "Response containing the number of chunks created",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IndexModuleResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"description": "Index a single module's content.",
+				"tags": [
+					"Content Indexing"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"description": "- The course ID",
+						"in": "path",
+						"name": "courseId",
+						"required": true,
+						"schema": {
+							"$ref": "#/components/schemas/Id"
+						}
+					},
+					{
+						"description": "- The module ID to index",
+						"in": "path",
+						"name": "moduleId",
+						"required": true,
+						"schema": {
+							"$ref": "#/components/schemas/Id"
+						}
+					}
+				]
+			}
+		},
 		"/api/v1/auth/signup": {
 			"post": {
 				"operationId": "Signup",
@@ -6188,6 +9394,39 @@
 						"application/json": {
 							"schema": {
 								"$ref": "#/components/schemas/TokenExchangeRequestDto"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/transcriptions/webhook": {
+			"post": {
+				"operationId": "IngestTranscription",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/TranscriptionSessionResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"description": "Webhook endpoint for talk-backend to POST completed transcriptions.\nThis is the primary ingestion path for transcription data.\n\nTODO: Add shared secret / API key verification for talk-backend.",
+				"tags": [
+					"Transcription"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/TranscriptionWebhookRequestDto"
 							}
 						}
 					}
