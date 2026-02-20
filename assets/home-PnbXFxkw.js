@@ -1,1 +1,0 @@
-import{K as e,w as t}from"./index-DkHy_0vr.js";var n=e(t());const r=()=>(0,n.jsx)(`div`,{className:`flex h-screen w-screen items-center justify-center bg-gray-100`,children:(0,n.jsx)(`h1`,{className:`text-4xl font-bold text-blue-600`,children:`Hello, World!`})});r.displayName=`Home`;var i=r;export{r as Component,i as default};

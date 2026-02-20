@@ -1,0 +1,1 @@
+import{T as e,Z as t}from"./index-De71N5Dy.js";var n=t(e());const r={breadcrumb:`Role Settings`};function i(){return(0,n.jsx)(`div`,{children:`Roles Settings Page`})}const a=i;export{a as Component,r as handle};
