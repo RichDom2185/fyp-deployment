@@ -1,0 +1,5 @@
+# Redirect rule for SPA client-side navigation
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
