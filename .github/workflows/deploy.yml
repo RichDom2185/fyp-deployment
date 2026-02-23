@@ -105,6 +105,7 @@ jobs:
         if: ${{ github.event.inputs.deploy_frontend == 'true' }}
         uses: peaceiris/actions-gh-pages@v4
         with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./apps/client-frontend/dist/
           publish_branch: deploy-frontend
           full_commit_message: "deploy: ${{ steps.set_commit_tag.outputs.COMMIT_TAG }}"
@@ -112,6 +113,7 @@ jobs:
         if: ${{ github.event.inputs.deploy_backend == 'true' }}
         uses: peaceiris/actions-gh-pages@v4
         with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./deploy-backend
           publish_branch: deploy-backend
           exclude_assets: node_modules
@@ -120,6 +122,7 @@ jobs:
         if: ${{ github.event.inputs.deploy_talk_frontend == 'true' }}
         uses: peaceiris/actions-gh-pages@v4
         with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./apps/talk-frontend/dist/
           publish_branch: deploy-talk-frontend
           full_commit_message: "deploy: ${{ steps.set_commit_tag.outputs.COMMIT_TAG }}"
@@ -127,6 +130,7 @@ jobs:
         if: ${{ github.event.inputs.deploy_talk_backend == 'true' }}
         uses: peaceiris/actions-gh-pages@v4
         with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./deploy-talk-backend
           publish_branch: deploy-talk-backend
           full_commit_message: "deploy: ${{ steps.set_commit_tag.outputs.COMMIT_TAG }}"
@@ -134,6 +138,7 @@ jobs:
         if: ${{ github.event.inputs.deploy_docs == 'true' }}
         uses: peaceiris/actions-gh-pages@v4
         with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./apps/docs/dist/
           publish_branch: deploy-docs
           full_commit_message: "deploy: ${{ steps.set_commit_tag.outputs.COMMIT_TAG }}"
