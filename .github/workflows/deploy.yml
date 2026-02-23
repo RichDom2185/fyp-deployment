@@ -93,12 +93,21 @@ jobs:
           mkdir -p lib
           cp ../apps/talk-backend/lib/swagger.json lib/swagger.json
           cp ../apps/talk-backend/dist/index.cjs index.cjs
+      # Use the source repository's commit hash instead of the
+      # workflow repository's to avoid confusion.
+      # Refer to the default values at
+      # https://github.com/peaceiris/actions-gh-pages/tree/v4
+      - name: Set source commit tag
+        id: set_commit_tag
+        run: |
+          echo "COMMIT_TAG=${{ secrets.SOURCE_REPOSITORY }}@$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
       - name: Deploy frontend
         if: ${{ github.event.inputs.deploy_frontend == 'true' }}
         uses: peaceiris/actions-gh-pages@v4
         with:
           publish_dir: ./apps/client-frontend/dist/
           publish_branch: deploy-frontend
+          full_commit_message: "deploy: ${{ steps.set_commit_tag.outputs.COMMIT_TAG }}"
       - name: Deploy backend
         if: ${{ github.event.inputs.deploy_backend == 'true' }}
         uses: peaceiris/actions-gh-pages@v4
@@ -106,21 +115,25 @@ jobs:
           publish_dir: ./deploy-backend
           publish_branch: deploy-backend
           exclude_assets: node_modules
+          full_commit_message: "deploy: ${{ steps.set_commit_tag.outputs.COMMIT_TAG }}"
       - name: Deploy chatroom frontend
         if: ${{ github.event.inputs.deploy_talk_frontend == 'true' }}
         uses: peaceiris/actions-gh-pages@v4
         with:
           publish_dir: ./apps/talk-frontend/dist/
           publish_branch: deploy-talk-frontend
+          full_commit_message: "deploy: ${{ steps.set_commit_tag.outputs.COMMIT_TAG }}"
       - name: Deploy chatroom backend
         if: ${{ github.event.inputs.deploy_talk_backend == 'true' }}
         uses: peaceiris/actions-gh-pages@v4
         with:
           publish_dir: ./deploy-talk-backend
           publish_branch: deploy-talk-backend
+          full_commit_message: "deploy: ${{ steps.set_commit_tag.outputs.COMMIT_TAG }}"
       - name: Deploy documentation
         if: ${{ github.event.inputs.deploy_docs == 'true' }}
         uses: peaceiris/actions-gh-pages@v4
         with:
           publish_dir: ./apps/docs/dist/
           publish_branch: deploy-docs
+          full_commit_message: "deploy: ${{ steps.set_commit_tag.outputs.COMMIT_TAG }}"
