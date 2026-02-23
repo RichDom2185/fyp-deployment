@@ -1,1 +1,0 @@
-import{T as e,Z as t}from"./index-De71N5Dy.js";var n=t(e());const r={breadcrumb:`Course Settings`};function i(){return(0,n.jsx)(`div`,{children:`Course Settings Page`})}const a=i;export{a as Component,r as handle};

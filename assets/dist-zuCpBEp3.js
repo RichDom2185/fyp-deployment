@@ -1,0 +1,1 @@
+import{K as e,T as t,Z as n}from"./index-Ra2lGJdp.js";var r=n(e(),1);t();var i=r.createContext(void 0);function a(e){let t=r.useContext(i);return e||t||`ltr`}export{a as t};
