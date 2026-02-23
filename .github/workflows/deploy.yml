@@ -1,0 +1,126 @@
+name: Deploy to Production
+on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: Branch/Tag/SHA to deploy
+        required: true
+        default: main
+      deploy_frontend:
+        type: boolean
+        description: Deploy frontend
+        required: true
+        default: true
+      deploy_backend:
+        type: boolean
+        description: Deploy backend
+        required: true
+        default: true
+      deploy_talk_frontend:
+        type: boolean
+        description: Deploy chatroom frontend
+        required: false
+        default: true
+      deploy_talk_backend:
+        type: boolean
+        description: Deploy chatroom backend
+        required: false
+        default: true
+      deploy_docs:
+        type: boolean
+        description: Deploy documentation
+        required: false
+        default: true
+
+permissions:
+  # Need to push to deployment branches
+  contents: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    environment: deployment
+    steps:
+      - name: Checkout remote source repository
+        uses: actions/checkout@v6
+        with:
+          repository: ${{ secrets.SOURCE_REPOSITORY }}
+          ref: ${{ github.event.inputs.ref }}
+          persist-credentials: false
+          ssh-key: ${{ secrets.SOURCE_REPOSITORY_SSH_KEY }}
+      - name: Enable corepack
+        run: corepack enable
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: pnpm
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Load environment files
+        run: |
+          echo "${{ secrets.FRONTEND_ENV }}" >> ./apps/client-frontend/.env.local
+          echo "${{ secrets.TALK_FRONTEND_ENV }}" >> ./apps/talk-frontend/.env.local
+      - name: Build project
+        run: pnpm build
+      - name: Prepare frontend deployment
+        if: ${{ github.event.inputs.deploy_frontend == 'true' }}
+        run: |
+          cp deployment/netlify.toml ./apps/client-frontend/dist/netlify.toml
+      - name: Prepare documentation deployment
+        if: ${{ github.event.inputs.deploy_docs == 'true' }}
+        run: |
+          cp deployment/netlify.toml ./apps/docs/dist/netlify.toml
+      - name: Prepare backend deployment
+        if: ${{ github.event.inputs.deploy_backend == 'true' }}
+        run: |
+          mkdir -p deploy-backend
+          cd deploy-backend
+          npm init -y
+          npm install --save argon2
+          mkdir -p lib
+          cp ../apps/client-backend/lib/swagger.json lib/swagger.json
+          cp ../apps/client-backend/dist/index.cjs index.js
+      - name: Prepare chatroom frontend deployment
+        if: ${{ github.event.inputs.deploy_talk_frontend == 'true' }}
+        run: |
+          cp deployment/netlify.toml ./apps/talk-frontend/dist/netlify.toml
+      - name: Prepare chatroom backend deployment
+        if: ${{ github.event.inputs.deploy_talk_backend == 'true' }}
+        run: |
+          mkdir -p deploy-talk-backend
+          cd deploy-talk-backend
+          mkdir -p lib
+          cp ../apps/talk-backend/lib/swagger.json lib/swagger.json
+          cp ../apps/talk-backend/dist/index.cjs index.cjs
+      - name: Deploy frontend
+        if: ${{ github.event.inputs.deploy_frontend == 'true' }}
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          publish_dir: ./apps/client-frontend/dist/
+          publish_branch: deploy-frontend
+      - name: Deploy backend
+        if: ${{ github.event.inputs.deploy_backend == 'true' }}
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          publish_dir: ./deploy-backend
+          publish_branch: deploy-backend
+          exclude_assets: node_modules
+      - name: Deploy chatroom frontend
+        if: ${{ github.event.inputs.deploy_talk_frontend == 'true' }}
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          publish_dir: ./apps/talk-frontend/dist/
+          publish_branch: deploy-talk-frontend
+      - name: Deploy chatroom backend
+        if: ${{ github.event.inputs.deploy_talk_backend == 'true' }}
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          publish_dir: ./deploy-talk-backend
+          publish_branch: deploy-talk-backend
+      - name: Deploy documentation
+        if: ${{ github.event.inputs.deploy_docs == 'true' }}
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          publish_dir: ./apps/docs/dist/
+          publish_branch: deploy-docs
