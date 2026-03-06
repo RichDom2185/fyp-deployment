@@ -1,1 +1,0 @@
-import{T as e,Z as t}from"./index-Ra2lGJdp.js";var n=t(e());const r={breadcrumb:`Course Settings`};function i(){return(0,n.jsx)(`div`,{children:`Course Settings Page`})}const a=i;export{a as Component,r as handle};
