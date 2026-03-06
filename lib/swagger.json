@@ -1192,6 +1192,25 @@
 				],
 				"type": "object"
 			},
+			"UserSearchResultDto": {
+				"properties": {
+					"email": {
+						"$ref": "#/components/schemas/Email"
+					},
+					"fullName": {
+						"type": "string"
+					},
+					"id": {
+						"$ref": "#/components/schemas/Id"
+					}
+				},
+				"required": [
+					"email",
+					"fullName",
+					"id"
+				],
+				"type": "object"
+			},
 			"AddCourseMemberListItemRequestDto": {
 				"properties": {
 					"roleId": {
@@ -1219,6 +1238,17 @@
 				},
 				"required": [
 					"members"
+				],
+				"type": "object"
+			},
+			"UpdateMemberRoleRequestDto": {
+				"properties": {
+					"roleId": {
+						"$ref": "#/components/schemas/Id"
+					}
+				},
+				"required": [
+					"roleId"
 				],
 				"type": "object"
 			},
@@ -2214,6 +2244,221 @@
 				],
 				"type": "object"
 			},
+			"ConfidenceDistributionResponseDto": {
+				"properties": {
+					"veryLow": {
+						"type": "number",
+						"format": "double"
+					},
+					"low": {
+						"type": "number",
+						"format": "double"
+					},
+					"medium": {
+						"type": "number",
+						"format": "double"
+					},
+					"high": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"veryLow",
+					"low",
+					"medium",
+					"high"
+				],
+				"type": "object"
+			},
+			"SegmentConfidenceResponseDto": {
+				"properties": {
+					"refinementStage": {
+						"type": "string"
+					},
+					"noSpeechProb": {
+						"type": "number",
+						"format": "double"
+					},
+					"avgLogprob": {
+						"type": "number",
+						"format": "double"
+					},
+					"avgConfidence": {
+						"type": "number",
+						"format": "double"
+					},
+					"wordCount": {
+						"type": "number",
+						"format": "double"
+					},
+					"endTime": {
+						"type": "number",
+						"format": "double"
+					},
+					"startTime": {
+						"type": "number",
+						"format": "double"
+					},
+					"segmentIndex": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"refinementStage",
+					"noSpeechProb",
+					"avgLogprob",
+					"avgConfidence",
+					"wordCount",
+					"endTime",
+					"startTime",
+					"segmentIndex"
+				],
+				"type": "object"
+			},
+			"LowConfidenceWordResponseDto": {
+				"properties": {
+					"refinedWord": {
+						"type": "string",
+						"nullable": true
+					},
+					"wasRefined": {
+						"type": "boolean"
+					},
+					"startTime": {
+						"type": "number",
+						"format": "double"
+					},
+					"wordIndex": {
+						"type": "number",
+						"format": "double"
+					},
+					"segmentIndex": {
+						"type": "number",
+						"format": "double"
+					},
+					"probability": {
+						"type": "number",
+						"format": "double"
+					},
+					"word": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"refinedWord",
+					"wasRefined",
+					"startTime",
+					"wordIndex",
+					"segmentIndex",
+					"probability",
+					"word"
+				],
+				"type": "object"
+			},
+			"ConfidenceAnalyticsResponseDto": {
+				"properties": {
+					"lowConfidenceWords": {
+						"items": {
+							"$ref": "#/components/schemas/LowConfidenceWordResponseDto"
+						},
+						"type": "array"
+					},
+					"segmentConfidences": {
+						"items": {
+							"$ref": "#/components/schemas/SegmentConfidenceResponseDto"
+						},
+						"type": "array"
+					},
+					"distribution": {
+						"$ref": "#/components/schemas/ConfidenceDistributionResponseDto"
+					},
+					"duration": {
+						"type": "number",
+						"format": "double",
+						"nullable": true
+					},
+					"totalSegments": {
+						"type": "number",
+						"format": "double"
+					},
+					"totalWords": {
+						"type": "number",
+						"format": "double"
+					},
+					"overallConfidence": {
+						"type": "number",
+						"format": "double",
+						"nullable": true
+					},
+					"sessionId": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"lowConfidenceWords",
+					"segmentConfidences",
+					"distribution",
+					"duration",
+					"totalSegments",
+					"totalWords",
+					"overallConfidence",
+					"sessionId"
+				],
+				"type": "object"
+			},
+			"CourseDashboardSessionSummaryResponseDto": {
+				"properties": {
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"currentRefinementStage": {
+						"type": "string",
+						"nullable": true
+					},
+					"hasRefinedText": {
+						"type": "boolean"
+					},
+					"model": {
+						"type": "string",
+						"nullable": true
+					},
+					"duration": {
+						"type": "number",
+						"format": "double",
+						"nullable": true
+					},
+					"overallConfidence": {
+						"type": "number",
+						"format": "double",
+						"nullable": true
+					},
+					"status": {
+						"type": "string"
+					},
+					"roomCode": {
+						"type": "string"
+					},
+					"id": {
+						"$ref": "#/components/schemas/Id"
+					}
+				},
+				"required": [
+					"createdAt",
+					"currentRefinementStage",
+					"hasRefinedText",
+					"model",
+					"duration",
+					"overallConfidence",
+					"status",
+					"roomCode",
+					"id"
+				],
+				"type": "object"
+			},
 			"CreateUserResponseDto": {
 				"properties": {
 					"updatedAt": {
@@ -2309,6 +2554,14 @@
 						"format": "double"
 					},
 					"filePath": {
+						"type": "string",
+						"deprecated": true
+					},
+					"folderPath": {
+						"type": "string",
+						"nullable": true
+					},
+					"fileName": {
 						"type": "string"
 					},
 					"courseId": {
@@ -2325,10 +2578,27 @@
 					"mimeType",
 					"fileSize",
 					"filePath",
+					"folderPath",
+					"fileName",
 					"courseId",
 					"id"
 				],
 				"type": "object"
+			},
+			"CourseFileListResponseDto": {
+				"allOf": [
+					{
+						"$ref": "#/components/schemas/CourseFileResponseDto"
+					},
+					{
+						"properties": {
+							"textContent": {
+								"type": "string"
+							}
+						},
+						"type": "object"
+					}
+				]
 			},
 			"DownloadUrlResponseDto": {
 				"properties": {
@@ -2340,6 +2610,75 @@
 					"url"
 				],
 				"type": "object"
+			},
+			"FilePreviewImageResponseDto": {
+				"properties": {
+					"urls": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					},
+					"type": {
+						"type": "string",
+						"enum": [
+							"images"
+						],
+						"nullable": false
+					}
+				},
+				"required": [
+					"urls",
+					"type"
+				],
+				"type": "object"
+			},
+			"FilePreviewMarkdownResponseDto": {
+				"properties": {
+					"content": {
+						"type": "string"
+					},
+					"type": {
+						"type": "string",
+						"enum": [
+							"markdown"
+						],
+						"nullable": false
+					}
+				},
+				"required": [
+					"content",
+					"type"
+				],
+				"type": "object"
+			},
+			"FilePreviewDefaultResponseDto": {
+				"properties": {
+					"type": {
+						"type": "string",
+						"enum": [
+							"default"
+						],
+						"nullable": false
+					}
+				},
+				"required": [
+					"type"
+				],
+				"type": "object"
+			},
+			"FilePreviewResponseDto": {
+				"anyOf": [
+					{
+						"$ref": "#/components/schemas/FilePreviewImageResponseDto"
+					},
+					{
+						"$ref": "#/components/schemas/FilePreviewMarkdownResponseDto"
+					},
+					{
+						"$ref": "#/components/schemas/FilePreviewDefaultResponseDto"
+					}
+				]
 			},
 			"DictionaryResponseDto": {
 				"properties": {
@@ -3170,11 +3509,35 @@
 				"type": "object",
 				"description": "Construct a type with a set of properties K of type T"
 			},
+			"RoleMemberDto": {
+				"properties": {
+					"avatarUrl": {
+						"type": "string",
+						"nullable": true
+					},
+					"email": {
+						"type": "string"
+					},
+					"fullName": {
+						"type": "string"
+					},
+					"userId": {
+						"$ref": "#/components/schemas/Id"
+					}
+				},
+				"required": [
+					"avatarUrl",
+					"email",
+					"fullName",
+					"userId"
+				],
+				"type": "object"
+			},
 			"RoleListItemResponseDto": {
 				"properties": {
 					"members": {
 						"items": {
-							"$ref": "#/components/schemas/Id"
+							"$ref": "#/components/schemas/RoleMemberDto"
 						},
 						"type": "array"
 					},
@@ -5233,6 +5596,23 @@
 							"format": "double",
 							"type": "number"
 						}
+					},
+					{
+						"in": "query",
+						"name": "roleId",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "search",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
 					}
 				]
 			},
@@ -5283,6 +5663,147 @@
 						}
 					}
 				}
+			}
+		},
+		"/api/v1/courses/{courseId}/members/search": {
+			"get": {
+				"operationId": "SearchUsers",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/UserSearchResultDto"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"description": "Search for users by email (for autocomplete).",
+				"tags": [
+					"Course Members"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "courseId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "query",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/api/v1/courses/{courseId}/members/{memberId}": {
+			"put": {
+				"operationId": "UpdateMemberRole",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CourseMemberResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"description": "Update a member's role.",
+				"tags": [
+					"Course Members"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "courseId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "path",
+						"name": "memberId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UpdateMemberRoleRequestDto"
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"operationId": "RemoveMember",
+				"responses": {
+					"204": {
+						"description": "No Content"
+					}
+				},
+				"description": "Remove a member from a course.",
+				"tags": [
+					"Course Members"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "courseId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "path",
+						"name": "memberId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
 			}
 		},
 		"/api/v1/tasks/download-zip/{jobId}": {
@@ -6524,6 +7045,83 @@
 				}
 			}
 		},
+		"/api/v1/transcriptions/{sessionId}/confidence": {
+			"get": {
+				"operationId": "GetConfidenceAnalytics",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ConfidenceAnalyticsResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"description": "Get confidence analytics for a transcription session.\nReturns word confidence distribution, per-segment stats,\nand a list of low-confidence words.",
+				"tags": [
+					"Transcription"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "sessionId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/api/v1/transcriptions/dashboard/course/{courseId}": {
+			"get": {
+				"operationId": "GetCourseDashboard",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/CourseDashboardSessionSummaryResponseDto"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"description": "Get a summary of all transcription sessions for a course,\nwith confidence stats for the dashboard overview.",
+				"tags": [
+					"Transcription"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "courseId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
 		"/api/v1/users": {
 			"post": {
 				"operationId": "CreateUser",
@@ -6763,7 +7361,7 @@
 							"application/json": {
 								"schema": {
 									"items": {
-										"$ref": "#/components/schemas/CourseFileResponseDto"
+										"$ref": "#/components/schemas/CourseFileListResponseDto"
 									},
 									"type": "array"
 								}
@@ -6904,6 +7502,221 @@
 					{
 						"in": "path",
 						"name": "fileId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/api/v1/courses/{courseId}/files/{fileId}/preview": {
+			"get": {
+				"operationId": "GetFilePreview",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/FilePreviewResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"description": "Get preview data for a file.\nReturns different preview types based on the file's content:\n- images: Array of image URLs (single for images, multiple pages for PDFs)\n- markdown: Converted markdown content\n- default: No preview available",
+				"tags": [
+					"Course Files"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "courseId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "path",
+						"name": "fileId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/api/v1/courses/{courseId}/files/{fileId}/rename": {
+			"post": {
+				"operationId": "RenameFileInCourse",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CourseFileResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"description": "Rename a file.",
+				"tags": [
+					"Course Files"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "courseId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "path",
+						"name": "fileId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"multipart/form-data": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"newFileName": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"newFileName"
+								]
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/courses/{courseId}/files/{fileId}/move": {
+			"post": {
+				"operationId": "MoveFileInCourse",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CourseFileResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"description": "Move a file to a different folder.",
+				"tags": [
+					"Course Files"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "courseId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "path",
+						"name": "fileId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"newFolderPath": {
+										"type": "string",
+										"nullable": true
+									}
+								},
+								"required": [
+									"newFolderPath"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/courses/{courseId}/files/folders": {
+			"get": {
+				"operationId": "ListFoldersForCourse",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"type": "string"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"description": "List all folders for a course.",
+				"tags": [
+					"Course Files"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "courseId",
 						"required": true,
 						"schema": {
 							"format": "double",
@@ -8032,6 +8845,36 @@
 						}
 					}
 				}
+			}
+		},
+		"/external-api/ping": {
+			"get": {
+				"operationId": "SendExternalPing",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"message": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"message"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Debug"
+				],
+				"security": [],
+				"parameters": []
 			}
 		},
 		"/signed-request/generate": {
