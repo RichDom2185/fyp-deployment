@@ -55,6 +55,8 @@ jobs:
         with:
           node-version: 24
           cache: pnpm
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v7
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
       - name: Load environment files
