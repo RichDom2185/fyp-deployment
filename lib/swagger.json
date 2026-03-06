@@ -29,6 +29,11 @@
 			},
 			"CreateRoomRequestDto": {
 				"properties": {
+					"courseId": {
+						"type": "number",
+						"format": "double",
+						"description": "Optional course ID to link this room to an LMS course."
+					},
 					"enableCloudRecording": {
 						"type": "boolean"
 					}
@@ -37,6 +42,137 @@
 					"enableCloudRecording"
 				],
 				"type": "object"
+			},
+			"TranscriptionWordResponseDto": {
+				"properties": {
+					"probability": {
+						"type": "number",
+						"format": "double"
+					},
+					"end": {
+						"type": "string"
+					},
+					"start": {
+						"type": "string"
+					},
+					"word": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"probability",
+					"end",
+					"start",
+					"word"
+				],
+				"type": "object"
+			},
+			"TranscriptionSegmentResponseDto": {
+				"properties": {
+					"words": {
+						"items": {
+							"$ref": "#/components/schemas/TranscriptionWordResponseDto"
+						},
+						"type": "array"
+					},
+					"compressionRatio": {
+						"type": "string"
+					},
+					"noSpeechProb": {
+						"type": "string"
+					},
+					"avgLogprob": {
+						"type": "string"
+					},
+					"text": {
+						"type": "string"
+					},
+					"end": {
+						"type": "string"
+					},
+					"start": {
+						"type": "string"
+					},
+					"id": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"words",
+					"compressionRatio",
+					"noSpeechProb",
+					"avgLogprob",
+					"text",
+					"end",
+					"start",
+					"id"
+				],
+				"type": "object"
+			},
+			"TranscriptionResponseDto": {
+				"properties": {
+					"userId": {
+						"type": "number",
+						"format": "double",
+						"description": "User ID of the person who sent the original audio."
+					},
+					"output": {
+						"properties": {
+							"overallConfidence": {
+								"type": "number",
+								"format": "double"
+							},
+							"processingTimeMs": {
+								"type": "number",
+								"format": "double"
+							},
+							"segments": {
+								"items": {
+									"$ref": "#/components/schemas/TranscriptionSegmentResponseDto"
+								},
+								"type": "array"
+							},
+							"text": {
+								"type": "string"
+							},
+							"language": {
+								"type": "string"
+							}
+						},
+						"required": [
+							"overallConfidence",
+							"processingTimeMs",
+							"segments",
+							"text",
+							"language"
+						],
+						"type": "object"
+					},
+					"id": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"userId",
+					"output",
+					"id"
+				],
+				"type": "object"
+			},
+			"Record_string.TranscriptionResponseDto-Array_": {
+				"properties": {},
+				"additionalProperties": {
+					"items": {
+						"$ref": "#/components/schemas/TranscriptionResponseDto"
+					},
+					"type": "array"
+				},
+				"type": "object",
+				"description": "Construct a type with a set of properties K of type T"
+			},
+			"TranscriptsResponseDto": {
+				"$ref": "#/components/schemas/Record_string.TranscriptionResponseDto-Array_"
 			}
 		},
 		"securitySchemes": {}
@@ -193,6 +329,98 @@
 						"required": true,
 						"schema": {
 							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/": {
+			"get": {
+				"operationId": "GetHealth",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"message": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"message"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Debug"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/signed-ping": {
+			"get": {
+				"operationId": "GetSignedRequestPong",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"message": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"message"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Debug"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/api/v1/transcriptions/{courseId}/transcripts": {
+			"get": {
+				"operationId": "GetTranscripts",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/TranscriptsResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Transcriptions"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "courseId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
 						}
 					}
 				]
