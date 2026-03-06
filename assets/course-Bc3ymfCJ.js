@@ -1,0 +1,1 @@
+import{$ as e,D as t}from"./index-BaGuAoJS.js";var n=e(t());const r={breadcrumb:`Course Settings`};function i(){return(0,n.jsx)(`div`,{children:`Course Settings Page`})}const a=i;export{a as Component,r as handle};
