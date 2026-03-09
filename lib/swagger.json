@@ -4232,9 +4232,9 @@
 			"OAuthProvider": {
 				"type": "string",
 				"enum": [
+					"google",
 					"github"
-				],
-				"nullable": false
+				]
 			},
 			"TokenExchangeRequestDto": {
 				"properties": {
