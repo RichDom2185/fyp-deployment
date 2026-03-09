@@ -4255,6 +4255,11 @@
 				],
 				"type": "object"
 			},
+			"FloatString": {
+				"type": "string",
+				"description": "A float represented either via standard decimal notation,\nor scientific notation (e.g. \"1.5e-3\"). Using strings to preserve precision.",
+				"pattern": "^-?\\d+(\\.\\d+)?(e-?\\d+)?$"
+			},
 			"TranscriptionWordRequestDto": {
 				"properties": {
 					"probability": {
@@ -4262,27 +4267,20 @@
 						"format": "double"
 					},
 					"end": {
-						"type": "number",
-						"format": "double"
+						"$ref": "#/components/schemas/FloatString"
 					},
 					"start": {
-						"type": "number",
-						"format": "double"
+						"$ref": "#/components/schemas/FloatString"
 					},
 					"word": {
 						"type": "string"
-					},
-					"id": {
-						"type": "number",
-						"format": "double"
 					}
 				},
 				"required": [
 					"probability",
 					"end",
 					"start",
-					"word",
-					"id"
+					"word"
 				],
 				"type": "object"
 			},
@@ -4295,27 +4293,22 @@
 						"type": "array"
 					},
 					"compressionRatio": {
-						"type": "number",
-						"format": "double"
+						"$ref": "#/components/schemas/FloatString"
 					},
 					"noSpeechProb": {
-						"type": "number",
-						"format": "double"
+						"$ref": "#/components/schemas/FloatString"
 					},
 					"avgLogprob": {
-						"type": "number",
-						"format": "double"
+						"$ref": "#/components/schemas/FloatString"
 					},
 					"text": {
 						"type": "string"
 					},
 					"end": {
-						"type": "number",
-						"format": "double"
+						"$ref": "#/components/schemas/FloatString"
 					},
 					"start": {
-						"type": "number",
-						"format": "double"
+						"$ref": "#/components/schemas/FloatString"
 					},
 					"id": {
 						"type": "number",
@@ -4344,13 +4337,6 @@
 						"type": "number",
 						"format": "double"
 					},
-					"duration": {
-						"type": "number",
-						"format": "double"
-					},
-					"model": {
-						"type": "string"
-					},
 					"segments": {
 						"items": {
 							"$ref": "#/components/schemas/TranscriptionSegmentRequestDto"
@@ -4360,10 +4346,6 @@
 					"text": {
 						"type": "string"
 					},
-					"languageConfidence": {
-						"type": "number",
-						"format": "double"
-					},
 					"language": {
 						"type": "string"
 					}
@@ -4371,11 +4353,8 @@
 				"required": [
 					"overallConfidence",
 					"processingTimeMs",
-					"duration",
-					"model",
 					"segments",
 					"text",
-					"languageConfidence",
 					"language"
 				],
 				"type": "object"
