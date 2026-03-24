@@ -1321,6 +1321,10 @@
 			},
 			"CourseListItemResponseDto": {
 				"properties": {
+					"membershipId": {
+						"type": "number",
+						"format": "double"
+					},
 					"role": {
 						"type": "string"
 					},
@@ -1333,6 +1337,7 @@
 					}
 				},
 				"required": [
+					"membershipId",
 					"role",
 					"name",
 					"id"
@@ -1347,6 +1352,367 @@
 				},
 				"required": [
 					"name"
+				],
+				"type": "object"
+			},
+			"Record_string.unknown_": {
+				"properties": {},
+				"additionalProperties": {},
+				"type": "object",
+				"description": "Construct a type with a set of properties K of type T"
+			},
+			"EvaluationResponseDto": {
+				"properties": {
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"confirmedById": {
+						"allOf": [
+							{
+								"$ref": "#/components/schemas/Id"
+							}
+						],
+						"nullable": true
+					},
+					"confirmedAt": {
+						"type": "string",
+						"format": "date-time",
+						"nullable": true
+					},
+					"evaluatedAt": {
+						"type": "string",
+						"format": "date-time",
+						"nullable": true
+					},
+					"llmModel": {
+						"type": "string",
+						"nullable": true
+					},
+					"metrics": {
+						"allOf": [
+							{
+								"$ref": "#/components/schemas/Record_string.unknown_"
+							}
+						],
+						"nullable": true
+					},
+					"quotedExcerpts": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					},
+					"confirmedFeedback": {
+						"type": "string",
+						"nullable": true
+					},
+					"suggestedFeedback": {
+						"type": "string",
+						"nullable": true
+					},
+					"confirmedScore": {
+						"type": "number",
+						"format": "double",
+						"nullable": true
+					},
+					"suggestedScore": {
+						"type": "number",
+						"format": "double",
+						"nullable": true
+					},
+					"status": {
+						"type": "string"
+					},
+					"rubricId": {
+						"$ref": "#/components/schemas/Id"
+					},
+					"membershipId": {
+						"$ref": "#/components/schemas/Id"
+					},
+					"roomCode": {
+						"type": "string"
+					},
+					"courseId": {
+						"$ref": "#/components/schemas/Id"
+					},
+					"id": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"updatedAt",
+					"createdAt",
+					"confirmedById",
+					"confirmedAt",
+					"evaluatedAt",
+					"llmModel",
+					"metrics",
+					"quotedExcerpts",
+					"confirmedFeedback",
+					"suggestedFeedback",
+					"confirmedScore",
+					"suggestedScore",
+					"status",
+					"rubricId",
+					"membershipId",
+					"roomCode",
+					"courseId",
+					"id"
+				],
+				"type": "object"
+			},
+			"EvaluateStudentRequestDto": {
+				"properties": {
+					"rubricId": {
+						"$ref": "#/components/schemas/Id"
+					},
+					"membershipId": {
+						"$ref": "#/components/schemas/Id"
+					},
+					"roomCode": {
+						"type": "string"
+					},
+					"courseId": {
+						"$ref": "#/components/schemas/Id"
+					}
+				},
+				"required": [
+					"membershipId",
+					"roomCode",
+					"courseId"
+				],
+				"type": "object"
+			},
+			"EvaluateRoomRequestDto": {
+				"properties": {
+					"rubricId": {
+						"$ref": "#/components/schemas/Id"
+					},
+					"roomCode": {
+						"type": "string"
+					},
+					"courseId": {
+						"$ref": "#/components/schemas/Id"
+					}
+				},
+				"required": [
+					"roomCode",
+					"courseId"
+				],
+				"type": "object"
+			},
+			"ConfirmEvaluationRequestDto": {
+				"properties": {
+					"confirmedById": {
+						"$ref": "#/components/schemas/Id"
+					},
+					"confirmedFeedback": {
+						"type": "string"
+					},
+					"confirmedScore": {
+						"type": "number",
+						"format": "double",
+						"nullable": true
+					}
+				},
+				"required": [
+					"confirmedById"
+				],
+				"type": "object"
+			},
+			"ParticipantReportResponseDto": {
+				"properties": {
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"sourceStatus": {
+						"type": "string"
+					},
+					"sourceEvaluationId": {
+						"allOf": [
+							{
+								"$ref": "#/components/schemas/Id"
+							}
+						],
+						"nullable": true
+					},
+					"metrics": {
+						"allOf": [
+							{
+								"$ref": "#/components/schemas/Record_string.unknown_"
+							}
+						],
+						"nullable": true
+					},
+					"quotedExcerpts": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					},
+					"feedback": {
+						"type": "string",
+						"nullable": true
+					},
+					"score": {
+						"type": "number",
+						"format": "double",
+						"nullable": true
+					},
+					"userName": {
+						"type": "string"
+					},
+					"userId": {
+						"$ref": "#/components/schemas/Id"
+					},
+					"membershipId": {
+						"$ref": "#/components/schemas/Id"
+					},
+					"id": {
+						"$ref": "#/components/schemas/Id"
+					}
+				},
+				"required": [
+					"createdAt",
+					"sourceStatus",
+					"sourceEvaluationId",
+					"metrics",
+					"quotedExcerpts",
+					"feedback",
+					"score",
+					"userName",
+					"userId",
+					"membershipId",
+					"id"
+				],
+				"type": "object"
+			},
+			"RoomReportResponseDto": {
+				"properties": {
+					"participants": {
+						"items": {
+							"$ref": "#/components/schemas/ParticipantReportResponseDto"
+						},
+						"type": "array"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"participantCount": {
+						"type": "number",
+						"format": "double"
+					},
+					"llmModel": {
+						"type": "string",
+						"nullable": true
+					},
+					"improvements": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					},
+					"strengths": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					},
+					"roomSummary": {
+						"type": "string"
+					},
+					"generatedById": {
+						"$ref": "#/components/schemas/Id"
+					},
+					"rubricId": {
+						"$ref": "#/components/schemas/Id"
+					},
+					"roomCode": {
+						"type": "string"
+					},
+					"courseId": {
+						"$ref": "#/components/schemas/Id"
+					},
+					"version": {
+						"type": "number",
+						"format": "double"
+					},
+					"reportRunId": {
+						"$ref": "#/components/schemas/Id"
+					}
+				},
+				"required": [
+					"participants",
+					"createdAt",
+					"participantCount",
+					"llmModel",
+					"improvements",
+					"strengths",
+					"roomSummary",
+					"generatedById",
+					"rubricId",
+					"roomCode",
+					"courseId",
+					"version",
+					"reportRunId"
+				],
+				"type": "object"
+			},
+			"GenerateRoomReportRequestDto": {
+				"properties": {
+					"membershipIds": {
+						"items": {
+							"$ref": "#/components/schemas/Id"
+						},
+						"type": "array"
+					},
+					"rubricId": {
+						"$ref": "#/components/schemas/Id"
+					},
+					"roomCode": {
+						"type": "string"
+					},
+					"courseId": {
+						"$ref": "#/components/schemas/Id"
+					}
+				},
+				"required": [
+					"roomCode",
+					"courseId"
+				],
+				"type": "object"
+			},
+			"EngagementReportVersionResponseDto": {
+				"properties": {
+					"participantCount": {
+						"type": "number",
+						"format": "double"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"version": {
+						"type": "number",
+						"format": "double"
+					},
+					"reportRunId": {
+						"$ref": "#/components/schemas/Id"
+					}
+				},
+				"required": [
+					"participantCount",
+					"createdAt",
+					"version",
+					"reportRunId"
 				],
 				"type": "object"
 			},
@@ -2047,6 +2413,11 @@
 					"status": {
 						"type": "string"
 					},
+					"createdById": {
+						"type": "number",
+						"format": "double",
+						"nullable": true
+					},
 					"courseId": {
 						"type": "number",
 						"format": "double",
@@ -2070,9 +2441,105 @@
 					"language",
 					"title",
 					"status",
+					"createdById",
 					"courseId",
 					"roomCode",
 					"id"
+				],
+				"type": "object"
+			},
+			"PlaybackSpanStatus": {
+				"type": "string",
+				"enum": [
+					"normal",
+					"weak_confidence",
+					"manual_edit"
+				]
+			},
+			"PlaybackSpanResponseDto": {
+				"properties": {
+					"status": {
+						"$ref": "#/components/schemas/PlaybackSpanStatus"
+					},
+					"text": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"status",
+					"text"
+				],
+				"type": "object"
+			},
+			"PlaybackMessageResponseDto": {
+				"properties": {
+					"spans": {
+						"items": {
+							"$ref": "#/components/schemas/PlaybackSpanResponseDto"
+						},
+						"type": "array"
+					},
+					"spokenAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"userId": {
+						"$ref": "#/components/schemas/Id"
+					},
+					"sessionId": {
+						"$ref": "#/components/schemas/Id"
+					},
+					"id": {
+						"$ref": "#/components/schemas/Id"
+					}
+				},
+				"required": [
+					"spans",
+					"spokenAt",
+					"userId",
+					"sessionId",
+					"id"
+				],
+				"type": "object"
+			},
+			"PlaybackUserResponseDto": {
+				"properties": {
+					"role": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"role",
+					"name"
+				],
+				"type": "object"
+			},
+			"Record_string.PlaybackUserResponseDto_": {
+				"properties": {},
+				"additionalProperties": {
+					"$ref": "#/components/schemas/PlaybackUserResponseDto"
+				},
+				"type": "object",
+				"description": "Construct a type with a set of properties K of type T"
+			},
+			"RoomPlaybackResponseDto": {
+				"properties": {
+					"users": {
+						"$ref": "#/components/schemas/Record_string.PlaybackUserResponseDto_"
+					},
+					"messages": {
+						"items": {
+							"$ref": "#/components/schemas/PlaybackMessageResponseDto"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"users",
+					"messages"
 				],
 				"type": "object"
 			},
@@ -2092,10 +2559,6 @@
 					"avgLogprob": {
 						"type": "number",
 						"format": "double"
-					},
-					"refinedText": {
-						"type": "string",
-						"nullable": true
 					},
 					"rawText": {
 						"type": "string"
@@ -2121,7 +2584,6 @@
 					"compressionRatio",
 					"noSpeechProb",
 					"avgLogprob",
-					"refinedText",
 					"rawText",
 					"endTime",
 					"startTime",
@@ -2241,6 +2703,124 @@
 				},
 				"required": [
 					"correctedWord"
+				],
+				"type": "object"
+			},
+			"RefinementStageResultResponseDto": {
+				"properties": {
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"editedById": {
+						"allOf": [
+							{
+								"$ref": "#/components/schemas/Id"
+							}
+						],
+						"nullable": true
+					},
+					"editedAt": {
+						"type": "string",
+						"format": "date-time",
+						"nullable": true
+					},
+					"error": {
+						"type": "string",
+						"nullable": true
+					},
+					"processingTimeMs": {
+						"type": "number",
+						"format": "double"
+					},
+					"metadata": {
+						"allOf": [
+							{
+								"$ref": "#/components/schemas/Record_string.unknown_"
+							}
+						],
+						"nullable": true
+					},
+					"changes": {
+						"items": {},
+						"type": "array"
+					},
+					"outputText": {
+						"type": "string",
+						"nullable": true
+					},
+					"inputText": {
+						"type": "string"
+					},
+					"status": {
+						"type": "string"
+					},
+					"manualForStageResultId": {
+						"allOf": [
+							{
+								"$ref": "#/components/schemas/Id"
+							}
+						],
+						"nullable": true
+					},
+					"isManualEdit": {
+						"type": "boolean"
+					},
+					"order": {
+						"type": "number",
+						"format": "double"
+					},
+					"stageType": {
+						"type": "string"
+					},
+					"stageName": {
+						"type": "string"
+					},
+					"stageId": {
+						"type": "number",
+						"format": "double"
+					},
+					"pipelineId": {
+						"$ref": "#/components/schemas/Id"
+					},
+					"sessionId": {
+						"$ref": "#/components/schemas/Id"
+					},
+					"id": {
+						"$ref": "#/components/schemas/Id"
+					}
+				},
+				"required": [
+					"createdAt",
+					"editedById",
+					"editedAt",
+					"error",
+					"processingTimeMs",
+					"metadata",
+					"changes",
+					"outputText",
+					"inputText",
+					"status",
+					"manualForStageResultId",
+					"isManualEdit",
+					"order",
+					"stageType",
+					"stageName",
+					"stageId",
+					"pipelineId",
+					"sessionId",
+					"id"
+				],
+				"type": "object"
+			},
+			"EditStageResultRequestDto": {
+				"properties": {
+					"editedText": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"editedText"
 				],
 				"type": "object"
 			},
@@ -4255,6 +4835,107 @@
 				],
 				"type": "object"
 			},
+			"RubricResponseDto": {
+				"properties": {
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"createdById": {
+						"$ref": "#/components/schemas/Id"
+					},
+					"isEnabled": {
+						"type": "boolean"
+					},
+					"maxScore": {
+						"type": "number",
+						"format": "double",
+						"nullable": true
+					},
+					"promptText": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					},
+					"roomCode": {
+						"type": "string",
+						"nullable": true
+					},
+					"courseId": {
+						"$ref": "#/components/schemas/Id"
+					},
+					"id": {
+						"$ref": "#/components/schemas/Id"
+					}
+				},
+				"required": [
+					"updatedAt",
+					"createdAt",
+					"createdById",
+					"isEnabled",
+					"maxScore",
+					"promptText",
+					"name",
+					"roomCode",
+					"courseId",
+					"id"
+				],
+				"type": "object"
+			},
+			"CreateRubricRequestDto": {
+				"properties": {
+					"maxScore": {
+						"type": "number",
+						"format": "double"
+					},
+					"promptText": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					},
+					"roomCode": {
+						"type": "string"
+					},
+					"courseId": {
+						"$ref": "#/components/schemas/Id"
+					}
+				},
+				"required": [
+					"promptText",
+					"name",
+					"courseId"
+				],
+				"type": "object"
+			},
+			"UpdateRubricRequestDto": {
+				"properties": {
+					"isEnabled": {
+						"type": "boolean"
+					},
+					"roomCode": {
+						"type": "string",
+						"nullable": true
+					},
+					"maxScore": {
+						"type": "number",
+						"format": "double",
+						"nullable": true
+					},
+					"promptText": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					}
+				},
+				"type": "object"
+			},
 			"FloatString": {
 				"type": "string",
 				"description": "A float represented either via standard decimal notation,\nor scientific notation (e.g. \"1.5e-3\"). Using strings to preserve precision.",
@@ -6085,6 +6766,403 @@
 				}
 			}
 		},
+		"/api/v1/engagement/evaluate": {
+			"post": {
+				"operationId": "EvaluateStudent",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/EvaluationResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"description": "Evaluate a single student's participation.",
+				"tags": [
+					"Engagement"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/EvaluateStudentRequestDto"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/engagement/evaluate-room": {
+			"post": {
+				"operationId": "EvaluateRoom",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/EvaluationResponseDto"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"description": "Evaluate all students in a room.",
+				"tags": [
+					"Engagement"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/EvaluateRoomRequestDto"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/engagement/{evaluationId}/confirm": {
+			"patch": {
+				"operationId": "ConfirmEvaluation",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/EvaluationResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"description": "Confirm (and optionally edit) a suggested evaluation.",
+				"tags": [
+					"Engagement"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "evaluationId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ConfirmEvaluationRequestDto"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/engagement/room": {
+			"get": {
+				"operationId": "ListRoomEvaluations",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/EvaluationResponseDto"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"description": "List evaluations for a room (instructor view).",
+				"tags": [
+					"Engagement"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "courseId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "roomCode",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/api/v1/engagement/student-report": {
+			"get": {
+				"operationId": "GetStudentReport",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/EvaluationResponseDto"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"description": "Get evaluations for a student across all rooms (student report).",
+				"tags": [
+					"Engagement"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "courseId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "membershipId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/api/v1/engagement/{evaluationId}": {
+			"get": {
+				"operationId": "GetEvaluation",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/EvaluationResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"description": "Get a single evaluation by ID.",
+				"tags": [
+					"Engagement"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "evaluationId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/api/v1/engagement/reports/room/generate": {
+			"post": {
+				"operationId": "GenerateRoomReport",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/RoomReportResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"description": "Generate a new, versioned room report synchronously.",
+				"tags": [
+					"Engagement"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/GenerateRoomReportRequestDto"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/engagement/reports/room": {
+			"get": {
+				"operationId": "GetRoomReport",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/RoomReportResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"description": "Get a room report by version. If version is omitted, returns latest.",
+				"tags": [
+					"Engagement"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "courseId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "roomCode",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "version",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/api/v1/engagement/reports/room/versions": {
+			"get": {
+				"operationId": "ListRoomReportVersions",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/EngagementReportVersionResponseDto"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"description": "List available versions for room reports.",
+				"tags": [
+					"Engagement"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "courseId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "roomCode",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
 		"/.well-known/jwks.json": {
 			"get": {
 				"operationId": "GetJwks",
@@ -6762,6 +7840,61 @@
 				]
 			}
 		},
+		"/api/v1/transcriptions/playback/room/{roomCode}": {
+			"get": {
+				"operationId": "GetRoomPlayback",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/RoomPlaybackResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"description": "Get room playback data with confidence-aware text spans and aggregated user info.",
+				"tags": [
+					"Transcription"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "roomCode",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "courseId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "confidenceThreshold",
+						"required": false,
+						"schema": {
+							"default": 0.75,
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
 		"/api/v1/transcriptions/{sessionId}": {
 			"get": {
 				"operationId": "GetSession",
@@ -7013,6 +8146,186 @@
 						"application/json": {
 							"schema": {
 								"$ref": "#/components/schemas/ManuallyCorrectWordRequestDto"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/transcriptions/{sessionId}/stages": {
+			"get": {
+				"operationId": "GetStageResults",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/RefinementStageResultResponseDto"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"description": "Get all refinement stage results for a session, ordered by execution.",
+				"tags": [
+					"Transcription"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "sessionId",
+						"required": true,
+						"schema": {
+							"$ref": "#/components/schemas/Id"
+						}
+					}
+				]
+			}
+		},
+		"/api/v1/transcriptions/{sessionId}/refine": {
+			"post": {
+				"operationId": "TriggerRefinement",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/RefinementStageResultResponseDto"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"description": "Trigger the full refinement pipeline for a session.\nIf the session has already been refined, this re-runs from scratch.",
+				"tags": [
+					"Transcription"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "sessionId",
+						"required": true,
+						"schema": {
+							"$ref": "#/components/schemas/Id"
+						}
+					}
+				]
+			}
+		},
+		"/api/v1/transcriptions/{sessionId}/refine-from/{stageOrder}": {
+			"post": {
+				"operationId": "TriggerRefinementFromStage",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/RefinementStageResultResponseDto"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"description": "Restart the refinement pipeline from a specific stage order onwards.\nEarlier stages keep their results (including any manual edits).",
+				"tags": [
+					"Transcription"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "sessionId",
+						"required": true,
+						"schema": {
+							"$ref": "#/components/schemas/Id"
+						}
+					},
+					{
+						"in": "path",
+						"name": "stageOrder",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/api/v1/transcriptions/{sessionId}/stages/{stageResultId}/edit": {
+			"patch": {
+				"operationId": "EditStageResult",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/RefinementStageResultResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"description": "Apply an instructor's manual edit to a stage result.\nDoes NOT automatically re-run subsequent stages.",
+				"tags": [
+					"Transcription"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "sessionId",
+						"required": true,
+						"schema": {
+							"$ref": "#/components/schemas/Id"
+						}
+					},
+					{
+						"in": "path",
+						"name": "stageResultId",
+						"required": true,
+						"schema": {
+							"$ref": "#/components/schemas/Id"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/EditStageResultRequestDto"
 							}
 						}
 					}
@@ -10217,6 +11530,245 @@
 				}
 			}
 		},
+		"/api/v1/rubrics": {
+			"post": {
+				"operationId": "CreateRubric",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/RubricResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Rubric"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateRubricRequestDto"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/rubrics/course/{courseId}": {
+			"get": {
+				"operationId": "ListRubrics",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/RubricResponseDto"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Rubric"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "courseId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/api/v1/rubrics/{rubricId}": {
+			"get": {
+				"operationId": "GetRubric",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/RubricResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Rubric"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "rubricId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			},
+			"patch": {
+				"operationId": "UpdateRubric",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/RubricResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Rubric"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "rubricId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UpdateRubricRequestDto"
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"operationId": "DeleteRubric",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/RubricResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Rubric"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "rubricId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/api/v1/rubrics/effective": {
+			"get": {
+				"operationId": "GetEffectiveRubric",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/RubricResponseDto"
+										}
+									],
+									"nullable": true
+								}
+							}
+						}
+					}
+				},
+				"description": "Resolve which rubric applies for a given course + room code.\nReturns room-specific rubric if one exists, otherwise course-level default.",
+				"tags": [
+					"Rubric"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "courseId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "roomCode",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
 		"/api/v1/transcriptions/webhook": {
 			"post": {
 				"operationId": "IngestTranscription",
@@ -10232,7 +11784,7 @@
 						}
 					}
 				},
-				"description": "Webhook endpoint for talk-backend to POST completed transcriptions.\nThis is the primary ingestion path for transcription data.\n\nTODO: Add shared secret / API key verification for talk-backend.",
+				"description": "Webhook endpoint for talk-backend to POST completed transcriptions.\nThis is the primary ingestion path for transcription data.\n\nAfter ingestion, automatically triggers the refinement pipeline\nif one is assigned to the course.\n\nTODO: Add shared secret / API key verification for talk-backend.",
 				"tags": [
 					"Transcription"
 				],
