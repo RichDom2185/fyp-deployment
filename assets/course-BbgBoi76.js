@@ -1,0 +1,1 @@
+import{t as e}from"./jsx-runtime-9YgKe2Eq.js";var t=e(),n={breadcrumb:`Course Settings`};function r(){return(0,t.jsx)(`div`,{children:`Course Settings Page`})}var i=r;export{i as Component,n as handle};
