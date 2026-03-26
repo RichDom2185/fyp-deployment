@@ -25,6 +25,140 @@
 				"description": "A valid DB entity ID.",
 				"minimum": 1
 			},
+			"ChatFrequencyResponseDto": {
+				"properties": {
+					"data": {
+						"items": {
+							"properties": {
+								"count": {
+									"type": "number",
+									"format": "double"
+								},
+								"date": {
+									"type": "string"
+								}
+							},
+							"required": [
+								"count",
+								"date"
+							],
+							"type": "object"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"data"
+				],
+				"type": "object"
+			},
+			"AverageTokenCountResponseDto": {
+				"properties": {
+					"averageTokens": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"averageTokens"
+				],
+				"type": "object"
+			},
+			"ModelUsageStatsResponseDto": {
+				"properties": {
+					"models": {
+						"items": {
+							"properties": {
+								"count": {
+									"type": "number",
+									"format": "double"
+								},
+								"model": {
+									"type": "string"
+								}
+							},
+							"required": [
+								"count",
+								"model"
+							],
+							"type": "object"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"models"
+				],
+				"type": "object"
+			},
+			"ActiveConversationsResponseDto": {
+				"properties": {
+					"count": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"count"
+				],
+				"type": "object"
+			},
+			"RecordChatActivityResponseDto": {
+				"properties": {
+					"success": {
+						"type": "boolean"
+					}
+				},
+				"required": [
+					"success"
+				],
+				"type": "object"
+			},
+			"Record_string.any_": {
+				"properties": {},
+				"additionalProperties": {},
+				"type": "object",
+				"description": "Construct a type with a set of properties K of type T"
+			},
+			"RecordChatActivityRequestDto": {
+				"properties": {
+					"additionalInfo": {
+						"$ref": "#/components/schemas/Record_string.any_"
+					},
+					"modelUsed": {
+						"type": "string"
+					},
+					"tokenCount": {
+						"type": "number",
+						"format": "double"
+					},
+					"messageId": {
+						"type": "number",
+						"format": "double"
+					},
+					"conversationId": {
+						"type": "number",
+						"format": "double"
+					},
+					"courseId": {
+						"type": "number",
+						"format": "double"
+					},
+					"type": {
+						"type": "string",
+						"enum": [
+							"message_sent",
+							"response_received",
+							"conversation_created"
+						]
+					}
+				},
+				"required": [
+					"courseId",
+					"type"
+				],
+				"type": "object"
+			},
 			"PostAuthorResponseDto": {
 				"properties": {
 					"avatarUrl": {
@@ -1355,6 +1489,44 @@
 				],
 				"type": "object"
 			},
+			"ChatRatingAnalyticsSummaryResponseDto": {
+				"properties": {
+					"distribution": {
+						"items": {
+							"properties": {
+								"count": {
+									"type": "number",
+									"format": "double"
+								},
+								"rating": {
+									"type": "number",
+									"format": "double"
+								}
+							},
+							"required": [
+								"count",
+								"rating"
+							],
+							"type": "object"
+						},
+						"type": "array"
+					},
+					"averageRating": {
+						"type": "number",
+						"format": "double"
+					},
+					"totalRatings": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"distribution",
+					"averageRating",
+					"totalRatings"
+				],
+				"type": "object"
+			},
 			"Record_string.unknown_": {
 				"properties": {},
 				"additionalProperties": {},
@@ -1797,6 +1969,89 @@
 				"type": "object",
 				"additionalProperties": false
 			},
+			"ChatRatingResponseDto": {
+				"properties": {
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"comment": {
+						"type": "string"
+					},
+					"rating": {
+						"type": "number",
+						"format": "double"
+					},
+					"messageId": {
+						"$ref": "#/components/schemas/Id"
+					},
+					"conversationId": {
+						"$ref": "#/components/schemas/Id"
+					},
+					"id": {
+						"$ref": "#/components/schemas/Id"
+					}
+				},
+				"required": [
+					"updatedAt",
+					"createdAt",
+					"rating",
+					"messageId",
+					"conversationId",
+					"id"
+				],
+				"type": "object"
+			},
+			"ChatRatingListResponseDto": {
+				"properties": {
+					"ratings": {
+						"items": {
+							"$ref": "#/components/schemas/ChatRatingResponseDto"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"ratings"
+				],
+				"type": "object"
+			},
+			"UpsertChatRatingResponseDto": {
+				"properties": {
+					"rating": {
+						"$ref": "#/components/schemas/ChatRatingResponseDto"
+					}
+				},
+				"required": [
+					"rating"
+				],
+				"type": "object"
+			},
+			"UpsertChatRatingRequestDto": {
+				"properties": {
+					"comment": {
+						"type": "string"
+					},
+					"rating": {
+						"type": "number",
+						"format": "double",
+						"minimum": 1,
+						"maximum": 5
+					},
+					"messageId": {
+						"$ref": "#/components/schemas/Id"
+					}
+				},
+				"required": [
+					"rating",
+					"messageId"
+				],
+				"type": "object"
+			},
 			"MostAccessedMaterialsResponseDto": {
 				"properties": {
 					"materials": {
@@ -1876,6 +2131,38 @@
 							"required": [
 								"views",
 								"date"
+							],
+							"type": "object"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"data"
+				],
+				"type": "object"
+			},
+			"TimeSpentByTypeResponseDto": {
+				"properties": {
+					"data": {
+						"items": {
+							"properties": {
+								"averageSeconds": {
+									"type": "number",
+									"format": "double"
+								},
+								"totalSeconds": {
+									"type": "number",
+									"format": "double"
+								},
+								"type": {
+									"type": "string"
+								}
+							},
+							"required": [
+								"averageSeconds",
+								"totalSeconds",
+								"type"
 							],
 							"type": "object"
 						},
@@ -2129,18 +2416,6 @@
 				],
 				"type": "object"
 			},
-			"ActiveUsersResponseDto": {
-				"properties": {
-					"count": {
-						"type": "number",
-						"format": "double"
-					}
-				},
-				"required": [
-					"count"
-				],
-				"type": "object"
-			},
 			"ActiveUsersOverTimeResponseDto": {
 				"properties": {
 					"data": {
@@ -2242,6 +2517,77 @@
 				],
 				"type": "object"
 			},
+			"SessionDurationResponseDto": {
+				"properties": {
+					"averageDurationSeconds": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"averageDurationSeconds"
+				],
+				"type": "object"
+			},
+			"BounceRateResponseDto": {
+				"properties": {
+					"bounceRate": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"bounceRate"
+				],
+				"type": "object"
+			},
+			"DeviceBrowserStatsResponseDto": {
+				"properties": {
+					"browsers": {
+						"items": {
+							"properties": {
+								"count": {
+									"type": "number",
+									"format": "double"
+								},
+								"name": {
+									"type": "string"
+								}
+							},
+							"required": [
+								"count",
+								"name"
+							],
+							"type": "object"
+						},
+						"type": "array"
+					},
+					"devices": {
+						"items": {
+							"properties": {
+								"count": {
+									"type": "number",
+									"format": "double"
+								},
+								"name": {
+									"type": "string"
+								}
+							},
+							"required": [
+								"count",
+								"name"
+							],
+							"type": "object"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"browsers",
+					"devices"
+				],
+				"type": "object"
+			},
 			"RecordUserActivityResponseDto": {
 				"properties": {
 					"success": {
@@ -2268,6 +2614,18 @@
 			"UserActivityType.LINK_CLICK": {
 				"enum": [
 					"link_click"
+				],
+				"type": "string"
+			},
+			"UserActivityType.SESSION_START": {
+				"enum": [
+					"session_start"
+				],
+				"type": "string"
+			},
+			"UserActivityType.SESSION_END": {
+				"enum": [
+					"session_end"
 				],
 				"type": "string"
 			},
@@ -2349,6 +2707,68 @@
 									},
 									"type": {
 										"$ref": "#/components/schemas/UserActivityType.LINK_CLICK"
+									}
+								},
+								"required": [
+									"additionalInfo",
+									"type"
+								],
+								"type": "object"
+							},
+							{
+								"properties": {
+									"additionalInfo": {
+										"properties": {
+											"timestamp": {
+												"type": "string"
+											},
+											"browser": {
+												"type": "string"
+											},
+											"device": {
+												"type": "string"
+											},
+											"sessionId": {
+												"type": "string"
+											}
+										},
+										"required": [
+											"sessionId"
+										],
+										"type": "object"
+									},
+									"type": {
+										"$ref": "#/components/schemas/UserActivityType.SESSION_START"
+									}
+								},
+								"required": [
+									"additionalInfo",
+									"type"
+								],
+								"type": "object"
+							},
+							{
+								"properties": {
+									"additionalInfo": {
+										"properties": {
+											"timestamp": {
+												"type": "string"
+											},
+											"duration": {
+												"type": "number",
+												"format": "double"
+											},
+											"sessionId": {
+												"type": "string"
+											}
+										},
+										"required": [
+											"sessionId"
+										],
+										"type": "object"
+									},
+									"type": {
+										"$ref": "#/components/schemas/UserActivityType.SESSION_END"
 									}
 								},
 								"required": [
@@ -3684,12 +4104,6 @@
 					"shareType"
 				],
 				"type": "object"
-			},
-			"Record_string.any_": {
-				"properties": {},
-				"additionalProperties": {},
-				"type": "object",
-				"description": "Construct a type with a set of properties K of type T"
 			},
 			"CalendarEventResponseDto": {
 				"properties": {
@@ -5134,6 +5548,259 @@
 						}
 					}
 				]
+			}
+		},
+		"/api/v1/analytics/chat/frequency": {
+			"get": {
+				"operationId": "GetChatFrequency",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ChatFrequencyResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"description": "Get chat frequency over time",
+				"tags": [
+					"Analytics"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "courseId",
+						"required": true,
+						"schema": {
+							"$ref": "#/components/schemas/Id"
+						}
+					},
+					{
+						"in": "query",
+						"name": "startDate",
+						"required": true,
+						"schema": {
+							"format": "date-time",
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "endDate",
+						"required": true,
+						"schema": {
+							"format": "date-time",
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/api/v1/analytics/chat/average-tokens": {
+			"get": {
+				"operationId": "GetAverageTokenCount",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/AverageTokenCountResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"description": "Get average token count",
+				"tags": [
+					"Analytics"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "courseId",
+						"required": true,
+						"schema": {
+							"$ref": "#/components/schemas/Id"
+						}
+					},
+					{
+						"in": "query",
+						"name": "startDate",
+						"required": true,
+						"schema": {
+							"format": "date-time",
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "endDate",
+						"required": true,
+						"schema": {
+							"format": "date-time",
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/api/v1/analytics/chat/model-usage": {
+			"get": {
+				"operationId": "GetModelUsage",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ModelUsageStatsResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"description": "Get model usage statistics",
+				"tags": [
+					"Analytics"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "courseId",
+						"required": true,
+						"schema": {
+							"$ref": "#/components/schemas/Id"
+						}
+					},
+					{
+						"in": "query",
+						"name": "startDate",
+						"required": true,
+						"schema": {
+							"format": "date-time",
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "endDate",
+						"required": true,
+						"schema": {
+							"format": "date-time",
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/api/v1/analytics/chat/active-conversations": {
+			"get": {
+				"operationId": "GetActiveConversations",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ActiveConversationsResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"description": "Get active conversations count",
+				"tags": [
+					"Analytics"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "courseId",
+						"required": true,
+						"schema": {
+							"$ref": "#/components/schemas/Id"
+						}
+					},
+					{
+						"in": "query",
+						"name": "startDate",
+						"required": true,
+						"schema": {
+							"format": "date-time",
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "endDate",
+						"required": true,
+						"schema": {
+							"format": "date-time",
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/api/v1/analytics/chat/record": {
+			"post": {
+				"operationId": "RecordChatActivity",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/RecordChatActivityResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"description": "Record a chat activity",
+				"tags": [
+					"Analytics"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/RecordChatActivityRequestDto"
+							}
+						}
+					}
+				}
 			}
 		},
 		"/api/v1/discussions": {
@@ -6766,6 +7433,60 @@
 				}
 			}
 		},
+		"/api/v1/analytics/chat-ratings/summary": {
+			"get": {
+				"operationId": "GetSummary",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ChatRatingAnalyticsSummaryResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"description": "Get chat rating analytics summary for a course.",
+				"tags": [
+					"Analytics"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "courseId",
+						"required": true,
+						"schema": {
+							"$ref": "#/components/schemas/Id"
+						}
+					},
+					{
+						"in": "query",
+						"name": "startDate",
+						"required": true,
+						"schema": {
+							"format": "date-time",
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "endDate",
+						"required": true,
+						"schema": {
+							"format": "date-time",
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
 		"/api/v1/engagement/evaluate": {
 			"post": {
 				"operationId": "EvaluateStudent",
@@ -7212,6 +7933,86 @@
 				"parameters": []
 			}
 		},
+		"/api/v1/conversations/{conversationId}/ratings": {
+			"get": {
+				"operationId": "GetRatings",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ChatRatingListResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"description": "Get current user's ratings for all messages in a conversation.",
+				"tags": [
+					"ChatRatings"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "conversationId",
+						"required": true,
+						"schema": {
+							"$ref": "#/components/schemas/Id"
+						}
+					}
+				]
+			},
+			"post": {
+				"operationId": "UpsertRating",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/UpsertChatRatingResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"description": "Rate an assistant message in a conversation (create or update).",
+				"tags": [
+					"ChatRatings"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "conversationId",
+						"required": true,
+						"schema": {
+							"$ref": "#/components/schemas/Id"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UpsertChatRatingRequestDto"
+							}
+						}
+					}
+				}
+			}
+		},
 		"/openai/count-tokens": {
 			"post": {
 				"operationId": "CountTokens",
@@ -7410,6 +8211,60 @@
 				]
 			}
 		},
+		"/api/v1/analytics/content/time-by-type": {
+			"get": {
+				"operationId": "GetTimeSpentByType",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/TimeSpentByTypeResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"description": "Get time spent by material type",
+				"tags": [
+					"Analytics"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "courseId",
+						"required": true,
+						"schema": {
+							"$ref": "#/components/schemas/Id"
+						}
+					},
+					{
+						"in": "query",
+						"name": "startDate",
+						"required": true,
+						"schema": {
+							"format": "date-time",
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "endDate",
+						"required": true,
+						"schema": {
+							"format": "date-time",
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
 		"/api/v1/analytics/content/record": {
 			"post": {
 				"operationId": "RecordContentActivity",
@@ -7541,61 +8396,6 @@
 						}
 					}
 				}
-			}
-		},
-		"/api/v1/analytics/user/active-users": {
-			"get": {
-				"operationId": "GetActiveUsersCount",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/ActiveUsersResponseDto"
-								}
-							}
-						}
-					}
-				},
-				"description": "Get active users count within a time range.",
-				"tags": [
-					"Analytics"
-				],
-				"security": [
-					{
-						"bearerAuth": []
-					}
-				],
-				"parameters": [
-					{
-						"in": "query",
-						"name": "startDate",
-						"required": true,
-						"schema": {
-							"format": "date-time",
-							"type": "string"
-						}
-					},
-					{
-						"in": "query",
-						"name": "endDate",
-						"required": true,
-						"schema": {
-							"format": "date-time",
-							"type": "string"
-						}
-					},
-					{
-						"in": "query",
-						"name": "courseId",
-						"required": true,
-						"schema": {
-							"format": "double",
-							"type": "number"
-						}
-					}
-				]
 			}
 		},
 		"/api/v1/analytics/user/active-users-over-time": {
@@ -7755,6 +8555,171 @@
 						"in": "query",
 						"name": "courseId",
 						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/api/v1/analytics/user/session-duration": {
+			"get": {
+				"operationId": "GetSessionDuration",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/SessionDurationResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"description": "Get average session duration",
+				"tags": [
+					"Analytics"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "startDate",
+						"required": true,
+						"schema": {
+							"format": "date-time",
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "endDate",
+						"required": true,
+						"schema": {
+							"format": "date-time",
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "courseId",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/api/v1/analytics/user/bounce-rate": {
+			"get": {
+				"operationId": "GetBounceRate",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/BounceRateResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"description": "Get bounce rate",
+				"tags": [
+					"Analytics"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "startDate",
+						"required": true,
+						"schema": {
+							"format": "date-time",
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "endDate",
+						"required": true,
+						"schema": {
+							"format": "date-time",
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "courseId",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/api/v1/analytics/user/device-browser": {
+			"get": {
+				"operationId": "GetDeviceBrowserStats",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DeviceBrowserStatsResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"description": "Get device and browser statistics",
+				"tags": [
+					"Analytics"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "startDate",
+						"required": true,
+						"schema": {
+							"format": "date-time",
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "endDate",
+						"required": true,
+						"schema": {
+							"format": "date-time",
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "courseId",
+						"required": false,
 						"schema": {
 							"format": "double",
 							"type": "number"
