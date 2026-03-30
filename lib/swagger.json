@@ -1448,6 +1448,45 @@
 				],
 				"type": "object"
 			},
+			"RearrangeCourseModulesRequestDto": {
+				"properties": {
+					"chapterModulesOrder": {
+						"items": {
+							"properties": {
+								"moduleIdsInOrder": {
+									"items": {
+										"type": "number",
+										"format": "double"
+									},
+									"type": "array"
+								},
+								"chapterId": {
+									"type": "number",
+									"format": "double"
+								}
+							},
+							"required": [
+								"moduleIdsInOrder",
+								"chapterId"
+							],
+							"type": "object"
+						},
+						"type": "array"
+					},
+					"chapterIdsInOrder": {
+						"items": {
+							"type": "number",
+							"format": "double"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"chapterModulesOrder",
+					"chapterIdsInOrder"
+				],
+				"type": "object"
+			},
 			"Name": {
 				"type": "string",
 				"description": "A valid name, done as an example.",
@@ -7247,9 +7286,9 @@
 				}
 			}
 		},
-		"/api/v1/chapters/reorder": {
+		"/api/v1/chapters/rearrange": {
 			"post": {
-				"operationId": "ReorderChapters",
+				"operationId": "RearrangeCourseModules",
 				"responses": {
 					"200": {
 						"description": "Ok",
@@ -7289,11 +7328,7 @@
 					"content": {
 						"application/json": {
 							"schema": {
-								"items": {
-									"type": "number",
-									"format": "double"
-								},
-								"type": "array"
+								"$ref": "#/components/schemas/RearrangeCourseModulesRequestDto"
 							}
 						}
 					}
@@ -8342,56 +8377,6 @@
 						"application/json": {
 							"schema": {
 								"$ref": "#/components/schemas/CreateModuleRequestDto"
-							}
-						}
-					}
-				}
-			}
-		},
-		"/api/v1/modules/reorder": {
-			"post": {
-				"operationId": "ReorderModules",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/ReorderModulesResponseDto"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Module"
-				],
-				"security": [
-					{
-						"bearerAuth": []
-					}
-				],
-				"parameters": [
-					{
-						"in": "query",
-						"name": "chapterId",
-						"required": true,
-						"schema": {
-							"format": "double",
-							"type": "number"
-						}
-					}
-				],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"items": {
-									"type": "number",
-									"format": "double"
-								},
-								"type": "array"
 							}
 						}
 					}
