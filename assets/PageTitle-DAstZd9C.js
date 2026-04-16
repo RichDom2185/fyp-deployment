@@ -1,0 +1,1 @@
+import{t as e}from"./jsx-runtime-9YgKe2Eq.js";import{r as t}from"./dist-Xb7rSUu9.js";var n=e();function r({className:e,children:r}){return(0,n.jsx)(`h1`,{className:t(`text-2xl md:text-3xl font-bold`,e),children:r})}export{r as t};

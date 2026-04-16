@@ -1,0 +1,1 @@
+import{o as e}from"./jsx-runtime-9YgKe2Eq.js";import{t}from"./react-JjZAc9W2.js";import{f as n,g as r}from"./chunk-OE4NN4TA-35BGCLjd.js";import{n as i}from"./PrefetchedLink-CEe_50nC.js";var a=e(t());function o({to:e}){let t=n(),{pathname:o}=r(e);return{onMouseEnter:(0,a.useCallback)(()=>{i(o)},[o]),navigate:(0,a.useCallback)(()=>t(e),[t,e])}}export{o as t};

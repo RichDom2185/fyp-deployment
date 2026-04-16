@@ -1,0 +1,1 @@
+import{t as e}from"./jsx-runtime-9YgKe2Eq.js";import{r as t}from"./dist-Xb7rSUu9.js";var n=e();function r({children:e}){return(0,n.jsx)(`div`,{className:t(`max-w-5xl mx-auto`,`px-4 md:px-6`,`space-y-4 md:space-y-6`,`pt-0 xl:pt-6`,`pb-6 md:pb-8`),children:e})}export{r as t};

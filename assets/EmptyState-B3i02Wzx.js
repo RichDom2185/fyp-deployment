@@ -1,0 +1,1 @@
+import{t as e}from"./jsx-runtime-9YgKe2Eq.js";var t=e();function n({children:e}){return(0,t.jsx)(`div`,{className:`text-center py-12`,children:(0,t.jsx)(`p`,{className:`text-muted-foreground`,children:e})})}export{n as t};
