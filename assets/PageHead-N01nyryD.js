@@ -1,1 +1,0 @@
-import{t as e}from"./jsx-runtime-9YgKe2Eq.js";import{r as t}from"./dist-Xb7rSUu9.js";var n=e();function r({children:e}){return(0,n.jsx)(`div`,{className:t(`flex gap-y-3 md:gap-y-4`,`flex-col lg:flex-row lg:items-center lg:justify-between`,`[&>div]:last:pb-6 [&>div]:last:border-b [&>div]:last:lg:border-0 [&>div]:last:lg:pb-0`),children:e})}export{r as t};
