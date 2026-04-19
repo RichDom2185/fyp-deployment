@@ -7,7 +7,7 @@
 		"requestBodies": {},
 		"responses": {},
 		"schemas": {
-			"Room": {
+			"RoomResponseDto": {
 				"properties": {
 					"expiredAt": {
 						"type": "string",
@@ -40,6 +40,81 @@
 				},
 				"required": [
 					"enableCloudRecording"
+				],
+				"type": "object"
+			},
+			"RoomConfigResponseDto": {
+				"properties": {
+					"autoApprove": {
+						"type": "boolean"
+					},
+					"code": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"autoApprove",
+					"code"
+				],
+				"type": "object"
+			},
+			"UpdateRoomConfigRequestDto": {
+				"properties": {
+					"autoApprove": {
+						"type": "boolean"
+					}
+				},
+				"required": [
+					"autoApprove"
+				],
+				"type": "object"
+			},
+			"RoomStatusResponseDto": {
+				"properties": {
+					"users": {
+						"items": {
+							"properties": {
+								"status": {
+									"type": "string",
+									"enum": [
+										"connected",
+										"pending",
+										"transmitting",
+										"disconnected"
+									]
+								},
+								"id": {
+									"type": "number",
+									"format": "double"
+								}
+							},
+							"required": [
+								"status",
+								"id"
+							],
+							"type": "object"
+						},
+						"type": "array"
+					},
+					"code": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"users",
+					"code"
+				],
+				"type": "object"
+			},
+			"ApproveTalkRequestDto": {
+				"properties": {
+					"userId": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"userId"
 				],
 				"type": "object"
 			},
@@ -121,7 +196,8 @@
 						"properties": {
 							"overallConfidence": {
 								"type": "number",
-								"format": "double"
+								"format": "double",
+								"nullable": true
 							},
 							"processingTimeMs": {
 								"type": "number",
@@ -192,7 +268,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/Room"
+									"$ref": "#/components/schemas/RoomResponseDto"
 								}
 							}
 						}
@@ -224,7 +300,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/Room"
+									"$ref": "#/components/schemas/RoomResponseDto"
 								}
 							}
 						}
@@ -332,6 +408,161 @@
 						}
 					}
 				]
+			}
+		},
+		"/api/v1/rooms/{code}/config": {
+			"get": {
+				"operationId": "GetRoomConfig",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/RoomConfigResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Rooms"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "code",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			},
+			"put": {
+				"operationId": "SetRoomConfig",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/RoomConfigResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Rooms"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "code",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UpdateRoomConfigRequestDto"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/rooms/{code}/status": {
+			"get": {
+				"operationId": "GetRoomStatus",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/RoomStatusResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Rooms"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "code",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/api/v1/rooms/{code}/approve-request": {
+			"post": {
+				"operationId": "ApproveTalkRequest",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"userId": {
+											"type": "number",
+											"format": "double"
+										},
+										"code": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"userId",
+										"code"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Rooms"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "code",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ApproveTalkRequestDto"
+							}
+						}
+					}
+				}
 			}
 		},
 		"/": {
